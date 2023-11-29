@@ -14,6 +14,7 @@ public class Sphere extends Hittable{
         center = _center;
         radius = _radius;
     }
+    //this form of programming reminds me of mvcode
     @Override
     public boolean hit(Ray ray, double rayTmin, double rayTmax, HitRecord rec) {
         Vec3 oc = sub(ray.origin(),center);
@@ -35,6 +36,8 @@ public class Sphere extends Hittable{
 
         rec.t = root;
         rec.p = (Point3) ray.at(rec.t);
+        Vec3 outward_normal = div(sub(rec.p,center),radius);
+        rec.set_face_normal(ray, outward_normal);
         rec.normal = div(sub(rec.p,center),radius);
 
         return true;

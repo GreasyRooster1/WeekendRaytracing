@@ -33,7 +33,7 @@ public class Vec3 {
         return e[2];
     }
 
-    Vec3 invert(){
+    public Vec3 invert(){
         return new Vec3(-e[0], -e[1], -e[2]);
     }
     public Vec3 sub(Vec3 v){
