@@ -8,6 +8,7 @@ import processing.core.PApplet;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
+import static main.Util.Common.*;
 import static main.Util.Vec3.*;
 import static processing.core.PApplet.println;
 
@@ -19,31 +20,12 @@ public class Renderer {
         app = Main.app;
     }
 
-    //Hey I actually ended up using the quadratic formula, Ms. Smith!
-    public static double hitSphere(Vec3 center,double radius, Ray ray){
-        Vec3 oc = sub(ray.origin(),center);
-
-        // using the formulas a=b⋅b, b=2b⋅(A−C), c=(A−C)⋅(A−C)−r2 we find the discriminant(s) for the quadratic, letting us find points of collision
-        // update: simplified this formula
-        double a = ray.direction().length_squared();
-        double half_b = dot(oc, ray.direction());
-        double c = oc.length_squared() - radius*radius;
-        double discriminant = half_b*half_b - a*c;
-
-        if (discriminant < 0) {
-            return -1.0;
-        } else {
-            return (-half_b - sqrt(discriminant) ) / a;
-        }
-    }
-
-    public static Vec3 rayColor(Ray r){
+    public static Vec3 rayColor(Ray r, Hittable world){
         //Red sphere
-        double t = hitSphere(new Vec3(0,0,-1), 0.5d, r);
-        if (t > 0.0) {
-            //outward normal (C-P=N)
-            Vec3 N = normalize(sub(r.at(t),new Vec3(0,0,-1)));
-            return mult(0.5d,new Vec3(N.x()+1, N.y()+1, N.z()+1));
+        HitRecord rec = new HitRecord();
+        rec = world.hit(r, 0, infinity, rec);
+        if (rec.hitAnything) {
+            return mult(0.5,add(rec.normal,color(1,1,1)));
         }
 
         //Sky
@@ -61,6 +43,13 @@ public class Renderer {
         // Calculate the image height, and ensure that it's at least 1.
         height = (int)(width / aspect_ratio);
         height = Math.max(height, 1);
+
+        // World
+
+        HittableList world = new HittableList();
+
+        world.add(new Sphere(point3(0,0,-1), 0.5));
+        world.add(new Sphere(point3(0,-100.5,-1), 100));
 
         // Camera
 
@@ -90,7 +79,7 @@ public class Renderer {
                 Ray r = new Ray(camera_center, ray_direction);
 
 
-                Vec3 pixelColor = rayColor(r);
+                Vec3 pixelColor = rayColor(r,world);
                 Color.write(i,j,pixelColor);
 
                 iterationCount++;

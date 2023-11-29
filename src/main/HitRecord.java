@@ -10,10 +10,11 @@ public class HitRecord {
 
     // this seems unintuitive, but this class just contains all the data for a hit
     // in practice this actually makes things easier
-    Point3 p;
+    Vec3 p;
     Vec3 normal;
     double t;
     boolean front_face;
+    boolean hitAnything;
 
     void set_face_normal(Ray r, Vec3 outward_normal) {
         // Sets the hit record normal vector.
