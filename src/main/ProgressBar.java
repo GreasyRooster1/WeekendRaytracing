@@ -36,6 +36,6 @@ public class ProgressBar extends JPanel {
         pbar.setValue(newValue);
     }
     public static void updateProgressBar(int i,int m){
-        Main.progressBar.updateBar((m/i)*100);
+        Main.progressBar.updateBar((i/m));
     }
 }

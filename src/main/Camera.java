@@ -9,6 +9,7 @@ import static main.Util.Vec3.*;
 public class Camera {
     public double aspectRatio = 1d;
     public int imageWidth = 400;
+    public int samplesPerPixel = 10;
     private int imageHeight;
     private Point3 center;
     private Vec3 pixel00_loc;
@@ -44,21 +45,19 @@ public class Camera {
         int iterationCount = 0;
         for (int j = 0; j < imageHeight; ++j) {
             for (int i = 0; i < imageWidth; ++i) {
-                Vec3 pixel_center = add(add(pixel00_loc,mult(i,pixelDeltaU)),mult(j,pixelDeltaV));
-                Vec3 ray_direction = pixel_center.sub(center);
-                Ray r = new Ray(center, ray_direction);
-
-
-                Vec3 pixelColor = rayColor(r,world);
-                Color.write(i,j,pixelColor);
-
+                Vec3 pixelColor = new Color(0,0,0);
+                for (int sample = 0; sample < samplesPerPixel; ++sample) {
+                    Ray r = getRay(i, j);
+                    pixelColor= pixelColor.add(rayColor(r, world));
+                }
+                Color.write(i,j,pixelColor,samplesPerPixel);
                 iterationCount++;
                 updateProgressBar(iterationCount,imageWidth*imageHeight);
             }
         }
     }
 
-    public Vec3 rayColor(Ray r, Hittable world){
+    private Vec3 rayColor(Ray r, Hittable world){
         //Red sphere
         HitRecord rec = new HitRecord();
         rec = world.hit(r, new Interval(0, infinity), rec);
@@ -72,6 +71,25 @@ public class Camera {
         Color end = new Color(1.0, 1.0, 1.0);
         double a = 0.5*(rayDirection.y() + 1.0);
         return Vec3.add(Vec3.mult((1d-a),end),Vec3.mult(a,start));
+    }
+
+    private Ray getRay(int i, int j){
+        // Get a randomly sampled camera ray for the pixel at location i,j.
+
+        Vec3 pixelCenter = add(add(pixel00_loc,mult(i,pixelDeltaU)),mult(j,pixelDeltaV));
+        Vec3 pixelSample = add(pixelCenter,pixel_sample_square());
+
+        Vec3 rayOrigin = center;
+        Vec3 rayDirection = sub(pixelSample,rayOrigin);
+
+        return new Ray((Point3) rayOrigin, rayDirection);
+    }
+
+    private Vec3 pixel_sample_square() {
+        // Returns a random point in the square surrounding a pixel at the origin.
+        double px = -0.5 + Main.app.random(1);
+        double py = -0.5 + Main.app.random(1);
+        return add(mult(px,pixelDeltaU),mult(py,pixelDeltaV));
     }
 
 }

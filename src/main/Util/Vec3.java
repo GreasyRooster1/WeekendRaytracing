@@ -22,7 +22,6 @@ public class Vec3 {
     public Vec3(double e0, double e1, double e2){
         e = new double[]{e0,e1,e2};
     }
-
     public double x(){
         return e[0];
     }
@@ -90,6 +89,9 @@ public class Vec3 {
 
     public static Vec3 div(Vec3 v, double t) {
         return new Vec3(v.e[0]/t,v.e[1]/t,v.e[2]/t);
+    }
+    public static Vec3 add(double i,Vec3 v) {
+        return new Vec3(v.x()+i,v.y()+i,v.z()+i);
     }
 
     public static double dot(Vec3 u,Vec3 v) {
