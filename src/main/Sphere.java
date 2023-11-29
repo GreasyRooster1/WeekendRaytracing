@@ -1,5 +1,6 @@
 package main;
 
+import main.Util.Interval;
 import main.Util.Point3;
 import main.Util.Ray;
 import main.Util.Vec3;
@@ -17,7 +18,7 @@ public class Sphere extends Hittable{
     }
     //Hey I actually ended up using the quadratic formula, Ms. Smith!
     @Override
-    public HitRecord hit(Ray ray, double rayTmin, double rayTmax, HitRecord rec) {
+    public HitRecord hit(Ray ray, Interval interval, HitRecord rec) {
         Vec3 oc = sub(ray.origin(),center);
 
         // using the formulas a=b⋅b, b=2b⋅(A−C), c=(A−C)⋅(A−C)−r2 we find the discriminant(s) for the quadratic, letting us find points of collision
@@ -35,9 +36,9 @@ public class Sphere extends Hittable{
 
         // Find the nearest root that lies in the acceptable range.
         double root = (-half_b - sqrtd) / a;
-        if (root <= rayTmin || rayTmax <= root) {
+        if (!interval.surrounds(root)) {
             root = (-half_b + sqrtd) / a;
-            if (root <= rayTmin || rayTmax <= root){
+            if (!interval.surrounds(root)){
                 //rec.hitAnything = false;
                 return rec;
             }

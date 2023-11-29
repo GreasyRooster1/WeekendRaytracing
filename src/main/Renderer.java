@@ -1,9 +1,6 @@
 package main;
 
-import main.Util.Color;
-import main.Util.Point3;
-import main.Util.Ray;
-import main.Util.Vec3;
+import main.Util.*;
 import processing.core.PApplet;
 
 import static java.lang.Math.abs;
@@ -23,7 +20,7 @@ public class Renderer {
     public static Vec3 rayColor(Ray r, Hittable world){
         //Red sphere
         HitRecord rec = new HitRecord();
-        rec = world.hit(r, 0, infinity, rec);
+        rec = world.hit(r, new Interval(0, infinity), rec);
         if (rec.hitAnything) {
             return mult(0.5,add(rec.normal,color(1,1,1)));
         }

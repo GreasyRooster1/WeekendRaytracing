@@ -1,5 +1,6 @@
 package main;
 
+import main.Util.Interval;
 import main.Util.Ray;
 
 import static processing.core.PApplet.append;
@@ -17,12 +18,12 @@ public class HittableList extends Hittable{
 
     //checks if anything is being hit
     @Override
-    public HitRecord hit(Ray ray, double rayTmin, double rayTmax, HitRecord rec) {
+    public HitRecord hit(Ray ray, Interval interval, HitRecord rec) {
         HitRecord tempRec = new HitRecord();
-        double closest_so_far = rayTmax;
+        double closest_so_far = interval.max;
 
         for (Hittable object : objects) {
-            if (object.hit(ray, rayTmin, closest_so_far, tempRec).hitAnything) {
+            if (object.hit(ray, new Interval(interval.min, closest_so_far), tempRec).hitAnything) {
                 rec.hitAnything = true;
                 closest_so_far = tempRec.t;
                 rec = tempRec;
