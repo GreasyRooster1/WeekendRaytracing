@@ -6,14 +6,19 @@ import processing.core.PApplet;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main extends PApplet {
     public static PApplet app;
+    public static ProgressBar progressBar;
     public void settings() {
-        size(500, 500);
+        double aspectRatio = 16f/9f;
+        int imageWidth = 1000;
+        int imageHeight = (int) (imageWidth / aspectRatio);
+        imageHeight = Math.max(imageHeight, 1);
+        size(imageWidth, imageHeight);
     }
 
     public void setup(){
         app = this;
+        progressBar = new ProgressBar();
         Renderer.setup();
-
     }
 
     public void draw(){
