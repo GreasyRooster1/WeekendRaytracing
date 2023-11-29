@@ -16,13 +16,25 @@ public class Renderer {
     public static PApplet app;
     public static void setup() {
         app = Main.app;
-        width = app.width;
-        height = app.height;
-        viewHeight = 2.0;
-        viewWidth = viewHeight * (double) (width/height);
+    }
+
+    //Hey I actually ended up using the quadratic formula, Ms. Smith!
+    public static boolean hitSphere(Vec3 center,double radius, Ray ray){
+        Vec3 oc = sub(ray.origin(),center);
+        double a = dot(ray.direction(), ray.direction());
+        double b = 2.0 * dot(oc, ray.direction());
+        double c = dot(oc, oc) - radius*radius;
+        double discriminant = b*b - 4*a*c;
+        return (discriminant >= 0);
     }
 
     public static Vec3 rayColor(Ray r){
+        //Red sphere
+        if(hitSphere(new Point3(0,0,-1),0.5,r)){
+            return new Vec3(1,0,0);
+        }
+
+        //Sky
         Vec3 rayDirection = normalize(r.direction());
         Color start = new Color(0.5, 0.7, 1.0);
         Color end = new Color(1.0, 1.0, 1.0);
@@ -31,10 +43,18 @@ public class Renderer {
     }
 
     public static void render(){
+        double aspect_ratio = 1;    //16d/9d; causes image stretching for some reason
+        width = app.width;
+
+        // Calculate the image height, and ensure that it's at least 1.
+        height = (int)(width / aspect_ratio);
+        height = Math.max(height, 1);
 
         // Camera
 
         double focal_length = 1.0;
+        viewHeight = 2.0;
+        viewWidth = viewHeight * (double) (width/height);
         Point3 camera_center = new Point3(0, 0, 0);
 
         // Calculate the vectors across the horizontal and down the vertical viewport edges.
