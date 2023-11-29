@@ -8,7 +8,7 @@ public class Main extends PApplet {
     public static PApplet app;
     public static ProgressBar progressBar;
     public void settings() {
-        double aspectRatio = 1; //16f/9f;
+        double aspectRatio = 16f/9f;
         int imageWidth = 1000;
         int imageHeight = (int) (imageWidth / aspectRatio);
         imageHeight = Math.max(imageHeight, 1);
