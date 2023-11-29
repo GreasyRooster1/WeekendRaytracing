@@ -65,7 +65,7 @@ public class Vec3 {
         return sqrt(length_squared());
     }
 
-    double length_squared(){
+    public double length_squared(){
         return e[0]*e[0] + e[1]*e[1] + e[2]*e[2];
     }
     public static Vec3 add(Vec3 u,Vec3 v) {

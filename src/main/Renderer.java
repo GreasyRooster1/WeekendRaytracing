@@ -24,16 +24,16 @@ public class Renderer {
         Vec3 oc = sub(ray.origin(),center);
 
         // using the formulas a=b⋅b, b=2b⋅(A−C), c=(A−C)⋅(A−C)−r2 we find the discriminant(s) for the quadratic, letting us find points of collision
+        // update: simplified this formula
+        double a = ray.direction().length_squared();
+        double half_b = dot(oc, ray.direction());
+        double c = oc.length_squared() - radius*radius;
+        double discriminant = half_b*half_b - a*c;
 
-        double a = dot(ray.direction(), ray.direction());
-        double b = 2.0 * dot(oc, ray.direction());
-        double c = dot(oc, oc) - radius*radius;
-
-        double discriminant = b*b - 4*a*c;
         if (discriminant < 0) {
             return -1.0;
         } else {
-            return (-b - sqrt(discriminant) ) / (2.0*a);
+            return (-half_b - sqrt(discriminant) ) / a;
         }
     }
 
