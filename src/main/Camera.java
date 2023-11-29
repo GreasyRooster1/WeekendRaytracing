@@ -62,7 +62,8 @@ public class Camera {
         HitRecord rec = new HitRecord();
         rec = world.hit(r, new Interval(0, infinity), rec);
         if (rec.hitAnything) {
-            return mult(0.5,add(rec.normal,color(1,1,1)));
+            Vec3 direction = randomOnHemisphere(rec.normal);
+            return mult(0.5,rayColor(new Ray(rec.p, direction), world));
         }
 
         //Sky

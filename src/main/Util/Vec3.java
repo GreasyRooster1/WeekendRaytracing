@@ -116,4 +116,32 @@ public class Vec3 {
     public int rgb() {
         return Main.app.color((int) (e[0]*255d),(int) (e[1]*255d),(int) (e[2]*255d));
     }
+
+    public static Vec3 random() {
+        return new Vec3(Main.app.random(1),Main.app.random(1),Main.app.random(1));
+    }
+
+    public static Vec3 random(float min, float max) {
+        return new Vec3(Main.app.random(min,max),Main.app.random(min,max),Main.app.random(min,max));
+    }
+    public static Vec3 randomInSphere(){
+        while (true) {
+            Vec3 p = Vec3.random(-1,1);
+            if (p.length_squared() < 1) {
+                return p;
+            }
+        }
+    }
+    public static Vec3 randomNormalizedVector() {
+        return unit_vector(randomInSphere());
+    }
+
+    public static Vec3 randomOnHemisphere(Vec3 normal) {
+        Vec3 on_unit_sphere = randomNormalizedVector();
+        if (dot(on_unit_sphere, normal) > 0.0) { // In the same hemisphere as the normal
+            return on_unit_sphere;
+        } else {
+            return on_unit_sphere.invert();
+        }
+    }
 }
