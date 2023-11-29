@@ -7,6 +7,7 @@ import main.Util.Vec3;
 import processing.core.PApplet;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.sqrt;
 import static main.Util.Vec3.*;
 import static processing.core.PApplet.println;
 
@@ -19,19 +20,30 @@ public class Renderer {
     }
 
     //Hey I actually ended up using the quadratic formula, Ms. Smith!
-    public static boolean hitSphere(Vec3 center,double radius, Ray ray){
+    public static double hitSphere(Vec3 center,double radius, Ray ray){
         Vec3 oc = sub(ray.origin(),center);
+
+        // using the formulas a=b⋅b, b=2b⋅(A−C), c=(A−C)⋅(A−C)−r2 we find the discriminant(s) for the quadratic, letting us find points of collision
+
         double a = dot(ray.direction(), ray.direction());
         double b = 2.0 * dot(oc, ray.direction());
         double c = dot(oc, oc) - radius*radius;
+
         double discriminant = b*b - 4*a*c;
-        return (discriminant >= 0);
+        if (discriminant < 0) {
+            return -1.0;
+        } else {
+            return (-b - sqrt(discriminant) ) / (2.0*a);
+        }
     }
 
     public static Vec3 rayColor(Ray r){
         //Red sphere
-        if(hitSphere(new Point3(0,0,-1),0.5,r)){
-            return new Vec3(1,0,0);
+        double t = hitSphere(new Vec3(0,0,-1), 0.5d, r);
+        if (t > 0.0) {
+            //outward normal (C-P=N)
+            Vec3 N = normalize(sub(r.at(t),new Vec3(0,0,-1)));
+            return mult(0.5d,new Vec3(N.x()+1, N.y()+1, N.z()+1));
         }
 
         //Sky

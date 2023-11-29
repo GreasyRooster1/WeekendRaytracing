@@ -1,5 +1,6 @@
 package main.Util;
 
+import static main.Util.Vec3.add;
 import static main.Util.Vec3.mult;
 
 public class Ray {
@@ -13,8 +14,8 @@ public class Ray {
     public Point3 origin() { return orig; }
     public Vec3 direction() { return dir; }
 
-    public Point3 at(double t){
-        return (Point3) orig.add(mult(t,dir));
+    public Vec3 at(double t){
+        return add(orig,(mult(t,dir)));
     }
 
 }
