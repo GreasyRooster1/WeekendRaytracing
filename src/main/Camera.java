@@ -7,9 +7,10 @@ import static main.Util.Common.*;
 import static main.Util.Vec3.*;
 
 public class Camera {
-    public double aspectRatio = 1d;
+    public double aspectRatio = Main.aspectRatio;
     public int imageWidth = 400;
     public int samplesPerPixel = 10;
+    public int maxDepth = 10;
     private int imageHeight;
     private Point3 center;
     private Vec3 pixel00_loc;
@@ -48,7 +49,7 @@ public class Camera {
                 Vec3 pixelColor = new Color(0,0,0);
                 for (int sample = 0; sample < samplesPerPixel; ++sample) {
                     Ray r = getRay(i, j);
-                    pixelColor= pixelColor.add(rayColor(r, world));
+                    pixelColor= pixelColor.add(rayColor(r,maxDepth, world));
                 }
                 Color.write(i,j,pixelColor,samplesPerPixel);
                 iterationCount++;
@@ -57,13 +58,16 @@ public class Camera {
         }
     }
 
-    private Vec3 rayColor(Ray r, Hittable world){
-        //Red sphere
+    private Vec3 rayColor(Ray r, int depth, Hittable world){
+        if(depth<=0){
+            return new Color(0,0,0);
+        }
         HitRecord rec = new HitRecord();
-        rec = world.hit(r, new Interval(0, infinity), rec);
+        rec = world.hit(r, new Interval(0.0001, infinity), rec);
         if (rec.hitAnything) {
+            // create a new random ray on the sphere and evaluate its color
             Vec3 direction = randomOnHemisphere(rec.normal);
-            return mult(0.5,rayColor(new Ray(rec.p, direction), world));
+            return mult(0.5,rayColor(new Ray(rec.p, direction),depth-1, world));
         }
 
         //Sky

@@ -27,7 +27,8 @@ public class Renderer {
 
         cam.aspectRatio = 16.0 / 9.0;
         cam.imageWidth  = Main.app.width;
-        cam.samplesPerPixel=100; // 10 for fast rendering, 100 for antialiasing rendering
+        cam.samplesPerPixel=10; // 10 for fast rendering, 100 for antialiasing rendering
+        cam.maxDepth=50;
 
         cam.render(world);
     }
