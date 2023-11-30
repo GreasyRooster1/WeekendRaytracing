@@ -66,7 +66,7 @@ public class Camera {
         rec = world.hit(r, new Interval(0.0001, infinity), rec);
         if (rec.hitAnything) {
             // create a new random ray on the sphere and evaluate its color
-            Vec3 direction = randomOnHemisphere(rec.normal);
+            Vec3 direction = add(rec.normal,randomNormalizedVector());
             return mult(0.5,rayColor(new Ray(rec.p, direction),depth-1, world));
         }
 
