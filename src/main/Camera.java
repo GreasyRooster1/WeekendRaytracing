@@ -67,7 +67,7 @@ public class Camera {
         if (rec.hitAnything) {
             // create a new random ray on the sphere and evaluate its color
             Vec3 direction = add(rec.normal,randomNormalizedVector());
-            return mult(0.5,rayColor(new Ray(rec.p, direction),depth-1, world));
+            return mult(0.9,rayColor(new Ray(rec.p, direction),depth-1, world));
         }
 
         //Sky
