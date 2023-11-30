@@ -7,9 +7,10 @@ import processing.core.PApplet;
 public class Main extends PApplet {
     public static PApplet app;
     public static ProgressBar progressBar;
+    public static double aspectRatio = 16d/9d;
+
     public void settings() {
-        double aspectRatio = 1; //16f/9f;
-        int imageWidth = 1000;
+        int imageWidth = 500;
         int imageHeight = (int) (imageWidth / aspectRatio);
         imageHeight = Math.max(imageHeight, 1);
         size(imageWidth, imageHeight);
@@ -19,10 +20,9 @@ public class Main extends PApplet {
         app = this;
         progressBar = new ProgressBar();
         Renderer.setup();
-    }
-
-    public void draw(){
+        noLoop();
         Renderer.render();
+        redraw();
     }
 
     public static void main(String[] passedArgs) {

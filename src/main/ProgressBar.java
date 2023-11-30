@@ -3,6 +3,8 @@ package main;
 import javax.swing.*;
 import java.awt.*;
 
+import static processing.core.PApplet.println;
+
 public class ProgressBar extends JPanel {
 
     JProgressBar pbar;
@@ -34,5 +36,8 @@ public class ProgressBar extends JPanel {
 
     public void updateBar(int newValue) {
         pbar.setValue(newValue);
+    }
+    public static void updateProgressBar(float i,float m){
+        Main.progressBar.updateBar((int) ((i/m)*100f));
     }
 }
