@@ -12,11 +12,13 @@ public class Sphere extends Hittable{
     //this form of programming reminds me of mvcode
     private Point3 center;
     private double radius;
-    Sphere(Point3 _center, double _radius){
+    private Material mat;
+    Sphere(Point3 _center, double _radius,Material _material){
         center = _center;
         radius = _radius;
+        mat = _material;
     }
-    //Hey I actually ended up using the quadratic formula, Ms. Smith!
+    //Hey, I actually ended up using the quadratic formula, Ms. Smith!
     @Override
     public HitRecord hit(Ray ray, Interval interval, HitRecord rec) {
         Vec3 oc = sub(ray.origin(),center);
@@ -49,6 +51,7 @@ public class Sphere extends Hittable{
         Vec3 outward_normal = div(sub(rec.p,center),radius);
         rec.set_face_normal(ray, outward_normal);
         rec.normal = div(sub(rec.p,center),radius);
+        rec.mat = mat;
 
         rec.hitAnything = true;
         return rec;
