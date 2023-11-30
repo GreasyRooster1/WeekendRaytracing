@@ -22,4 +22,10 @@ public class Ray {
         return add(orig,(mult(t,dir)));
     }
 
+    public Ray set(Ray r){
+        orig = r.orig;
+        dir = r.dir;
+        return this;
+    }
+
 }

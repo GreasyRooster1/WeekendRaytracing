@@ -10,8 +10,7 @@ this seems more intuitive now
 import main.Main;
 import main.Renderer;
 
-import static java.lang.Math.atan2;
-import static java.lang.Math.sqrt;
+import static java.lang.Math.*;
 
 public class Vec3 {
     double[] e;
@@ -143,5 +142,18 @@ public class Vec3 {
         } else {
             return on_unit_sphere.invert();
         }
+    }
+
+    public Vec3 set(Vec3 vec){
+        e[0]=vec.x();
+        e[1]=vec.y();
+        e[2]=vec.z();
+        return this;
+    }
+
+    public boolean nearZero() {
+        // Return true if the vector is close to zero in all dimensions.
+        double s = 1e-8;
+        return (abs(e[0]) < s) && (abs(e[1]) < s) && (abs(e[2]) < s);
     }
 }

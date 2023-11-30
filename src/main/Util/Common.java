@@ -20,10 +20,10 @@ public class Common {
     public static Color color(double r,double g,double b){
         return new Color(r,g,b);
     }
-    public static Vec3 vec3(double r,double g,double b){
-        return new Vec3(r,g,b);
+    public static Vec3 vec3(double x,double y,double z){
+        return new Vec3(x,y,z);
     }
-    public static Point3 point3(double r,double g,double b){
-        return new Point3(r,g,b);
+    public static Point3 point3(double x,double y,double z){
+        return new Point3(x,y,z);
     }
 }
