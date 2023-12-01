@@ -1,5 +1,6 @@
 package main;
 
+import main.Materials.Dielectric;
 import main.Materials.Lambertian;
 import main.Materials.Metal;
 import main.Util.*;
@@ -20,20 +21,20 @@ public class Renderer {
         HittableList world = new HittableList();
 
         Material floorMaterial = new Lambertian(0.8, 0.8, 0.0);
-        Material matteMaterial = new Lambertian(0.7, 0.3, 0.3);
-        Material metalMaterial = new Metal(0.8, 0.8, 0.8,0.1);
-        Material goldMaterial = new Metal(0.8, 0.6, 0.2,0.9);
+        Material centerMaterial = new Dielectric(1.5d);
+        Material leftMaterial = new Dielectric(1.5d);
+        Material rightMaterial = new Metal(0.8, 0.6, 0.2,0.9);
 
-        world.add(new Sphere(point3(0,0,-1), 0.5, matteMaterial));
-        world.add(new Sphere(point3(1,0,-1), 0.5, goldMaterial));
-        world.add(new Sphere(point3(-1,0,-1), 0.5, metalMaterial));
+        world.add(new Sphere(point3(0,0,-1), 0.5, centerMaterial));
+        world.add(new Sphere(point3(1,0,-1), 0.5, leftMaterial));
+        world.add(new Sphere(point3(-1,0,-1), 0.5, rightMaterial));
         world.add(new Sphere(point3(0,-100.5,-1), 100, floorMaterial));
 
         Camera cam = new Camera();
 
         cam.aspectRatio = 16.0 / 9.0;
         cam.imageWidth  = Main.app.width;
-        cam.samplesPerPixel=400; // 10 for fast rendering, 100 for antialiasing rendering
+        cam.samplesPerPixel=10; // 10 for fast rendering, 100 for antialiasing rendering
         cam.maxDepth=50;
 
         cam.render(world);

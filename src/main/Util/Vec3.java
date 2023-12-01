@@ -160,4 +160,11 @@ public class Vec3 {
     public static Vec3 reflect(Vec3 v,Vec3 normal){
         return sub(v,mult(2*dot(v,normal),normal));
     }
+
+    public static Vec3 refract(Vec3 uv,Vec3 n,double etaiOverEtat){
+        double cosTheta = min(dot(uv.invert(),n),1.0);
+        Vec3 rOutPerp = mult(etaiOverEtat,add(uv,mult(cosTheta,n)));
+        Vec3 rOutPar = mult(-sqrt(abs(1-rOutPerp.length_squared())),n);
+        return add(rOutPerp,rOutPar);
+    }
 }
