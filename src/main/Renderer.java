@@ -21,8 +21,8 @@ public class Renderer {
         HittableList world = new HittableList();
 
         Material floorMaterial = new Lambertian(0.8, 0.8, 0.0);
-        Material centerMaterial = new Dielectric(1.5d);
-        Material leftMaterial = new Dielectric(1.5d);
+        Material centerMaterial = new Lambertian(0.8, 0.01, 0.1);
+        Material leftMaterial = new Dielectric(1d);
         Material rightMaterial = new Metal(0.8, 0.6, 0.2,0.9);
 
         world.add(new Sphere(point3(0,0,-1), 0.5, centerMaterial));

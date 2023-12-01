@@ -5,6 +5,7 @@ import main.Util.Point3;
 import main.Util.Ray;
 import main.Util.Vec3;
 
+import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 import static main.Util.Vec3.*;
 
@@ -44,6 +45,10 @@ public class Sphere extends Hittable{
                 //rec.hitAnything = false;
                 return rec;
             }
+        }
+
+        if(pow(ray.origin().x()-center.x(),2)+pow(ray.origin().y()-center.y(),2)+pow(ray.origin().z()-center.z(),2)<radius*radius){
+            return rec;
         }
 
         rec.t = root;
