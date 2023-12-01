@@ -15,7 +15,7 @@ public class HitRecord {
     public Material mat;
     public double t;
     public boolean front_face;
-    public boolean hitAnything;
+    //public boolean hitAnything;
 
 
     void set_face_normal(Ray r, Vec3 outward_normal) {
@@ -24,5 +24,14 @@ public class HitRecord {
 
         front_face = dot(r.direction(), outward_normal) < 0;
         normal = front_face ? outward_normal : outward_normal.invert();
+    }
+
+    public void set(HitRecord t) {
+        p = t.p;
+        normal=t.normal;
+        mat = t.mat;
+        this.t = t.t;
+        front_face = t.front_face;
+        //hitAnything = t.hitAnything;
     }
 }

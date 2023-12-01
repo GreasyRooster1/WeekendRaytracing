@@ -4,10 +4,11 @@ import main.Util.Interval;
 import main.Util.Point3;
 import main.Util.Ray;
 import main.Util.Vec3;
+import processing.core.PApplet;
 
-import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 import static main.Util.Vec3.*;
+import static processing.core.PApplet.dist;
 
 public class Sphere extends Hittable{
     //this form of programming reminds me of mvcode
@@ -21,7 +22,7 @@ public class Sphere extends Hittable{
     }
     //Hey, I actually ended up using the quadratic formula, Ms. Smith!
     @Override
-    public HitRecord hit(Ray ray, Interval interval, HitRecord rec) {
+    public boolean hit(Ray ray, Interval interval, HitRecord rec) {
         Vec3 oc = sub(ray.origin(),center);
 
         // using the formulas a=b⋅b, b=2b⋅(A−C), c=(A−C)⋅(A−C)−r2 we find the discriminant(s) for the quadratic, letting us find points of collision
@@ -33,7 +34,7 @@ public class Sphere extends Hittable{
         double discriminant = half_b*half_b - a*c;
         if (discriminant < 0) {
             //rec.hitAnything = false;
-            return rec;
+            return false;
         }
         double sqrtd = sqrt(discriminant);
 
@@ -43,12 +44,15 @@ public class Sphere extends Hittable{
             root = (-half_b + sqrtd) / a;
             if (!interval.surrounds(root)){
                 //rec.hitAnything = false;
-                return rec;
+                return false;
             }
         }
 
-        if(pow(ray.origin().x()-center.x(),2)+pow(ray.origin().y()-center.y(),2)+pow(ray.origin().z()-center.z(),2)<radius*radius){
-            return rec;
+//        if(pow(ray.origin().x()-center.x(),2)+pow(ray.origin().y()-center.y(),2)+pow(ray.origin().z()-center.z(),2)<radius*radius){
+//            return false;
+//        }
+        if(dist(ray.origin().x(),ray.origin().y(),ray.origin().z(),center.x(),center.y(),center.z())<radius){
+            return false;
         }
 
         rec.t = root;
@@ -57,8 +61,10 @@ public class Sphere extends Hittable{
         rec.set_face_normal(ray, outward_normal);
         rec.normal = div(sub(rec.p,center),radius);
         rec.mat = mat;
+        return true;
+    }
 
-        rec.hitAnything = true;
-        return rec;
+    private float dist(double x, double y, double z, double x1, double y1, double z1) {
+        return PApplet.dist((float) x,(float) y,(float) z,(float) x1,(float) y1,(float) z1);
     }
 }

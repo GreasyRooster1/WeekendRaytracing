@@ -21,9 +21,10 @@ public class Renderer {
         HittableList world = new HittableList();
 
         Material floorMaterial = new Lambertian(0.8, 0.8, 0.0);
-        Material centerMaterial = new Lambertian(0.8, 0.01, 0.1);
+        Material centerMaterial = new Lambertian(0.85, 0.3, 0.5);
         Material leftMaterial = new Dielectric(1d);
-        Material rightMaterial = new Metal(0.8, 0.6, 0.2,0.9);
+        //Material rightMaterial = new Metal(0.8, 0.6, 0.2,0.9);
+        Material rightMaterial = new Metal(1,1, 1,0.9);
 
         world.add(new Sphere(point3(0,0,-1), 0.5, centerMaterial));
         world.add(new Sphere(point3(1,0,-1), 0.5, leftMaterial));
@@ -34,8 +35,8 @@ public class Renderer {
 
         cam.aspectRatio = 16.0 / 9.0;
         cam.imageWidth  = Main.app.width;
-        cam.samplesPerPixel=10; // 10 for fast rendering, 100 for antialiasing rendering
-        cam.maxDepth=50;
+        cam.samplesPerPixel=100; // 10 for fast rendering, 100 for antialiasing rendering
+        cam.maxDepth=5;
 
         cam.render(world);
     }

@@ -30,7 +30,6 @@ public class Metal extends Material {
         Vec3 reflected = reflect(normalize(rIn.direction()),rec.normal);
         scattered.set(new Ray(rec.p,add(reflected,mult(fuzz,randomNormalizedVector()))));
         attenuation.set(albedo);
-        rec.hitAnything = true;
         return (dot(scattered.direction(), rec.normal) > 0);
     }
 }

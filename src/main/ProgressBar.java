@@ -1,5 +1,7 @@
 package main;
 
+import main.Util.Interval;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -26,18 +28,17 @@ public class ProgressBar extends JPanel {
 
         JFrame frame = new JFrame("Progress Bar");
         Rectangle r = frame.getBounds();
-        setLocation(Main.app.windowX+Main.app.width/2-r.width,Main.app.windowY-60);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(this);
         frame.pack();
         frame.setVisible(true);
-
+        //frame.setLocation(Main.app.windowX+Main.app.width/2-r.width,Main.app.windowY-60);
     }
 
     public void updateBar(int newValue) {
         pbar.setValue(newValue);
     }
-    public static void updateProgressBar(float i,float m){
-        Main.progressBar.updateBar((int) ((i/m)*100f));
+    public static void updateProgressBar(float j,float m){
+        Main.progressBar.updateBar((int) ((j/m)*100f));
     }
 }

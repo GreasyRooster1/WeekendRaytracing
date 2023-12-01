@@ -18,17 +18,18 @@ public class HittableList extends Hittable{
 
     //checks if anything is being hit
     @Override
-    public HitRecord hit(Ray ray, Interval interval, HitRecord rec) {
+    public boolean hit(Ray ray, Interval interval, HitRecord rec) {
         HitRecord tempRec = new HitRecord();
+        boolean hitAnything = false;
         double closest_so_far = interval.max;
 
         for (Hittable object : objects) {
-            if (object.hit(ray, new Interval(interval.min, closest_so_far), tempRec).hitAnything) {
-                rec.hitAnything = true;
+            if (object.hit(ray, new Interval(interval.min, closest_so_far), tempRec)) {
+                hitAnything = true;
                 closest_so_far = tempRec.t;
-                rec = tempRec;
+                rec.set(tempRec);
             }
         }
-        return rec;
+        return hitAnything;
     }
 }

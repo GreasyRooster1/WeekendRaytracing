@@ -63,8 +63,7 @@ public class Camera {
             return new Color(0,0,0);
         }
         HitRecord rec = new HitRecord();
-        rec = world.hit(r, new Interval(0.0001, infinity), rec);
-        if (rec.hitAnything) {
+        if (world.hit(r, new Interval(0.01, infinity), rec)) {
             Ray scattered = new Ray();
             Color attenuation = new Color();
             if(rec.mat.scatter(r,rec,attenuation,scattered)){
