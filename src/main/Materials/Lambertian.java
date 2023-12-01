@@ -15,8 +15,12 @@ public class Lambertian extends Material {
         albedo = color;
     }
 
+    public Lambertian(double r, double g, double b) {
+        albedo = new Vec3(r,g,b);
+    }
+
     @Override
-    public HitRecord scatter(Ray rIn, HitRecord rec, Vec3 color, Vec3 attenuation, Ray scattered) {
+    public boolean scatter(Ray rIn, HitRecord rec, Vec3 attenuation, Ray scattered) {
         Vec3 scatterDirection = add(rec.normal,randomNormalizedVector());
 
         if(scatterDirection.nearZero()){
@@ -27,7 +31,6 @@ public class Lambertian extends Material {
         scattered.set(new Ray(rec.p,scatterDirection));
         attenuation.set(albedo);
 
-        rec.hitAnything=true;
-        return rec;
+        return true;
     }
 }

@@ -156,4 +156,8 @@ public class Vec3 {
         double s = 1e-8;
         return (abs(e[0]) < s) && (abs(e[1]) < s) && (abs(e[2]) < s);
     }
+
+    public static Vec3 reflect(Vec3 v,Vec3 normal){
+        return sub(v,mult(2*dot(v,normal),normal));
+    }
 }

@@ -15,6 +15,11 @@ public class Ray {
         dir=direction;
     }
 
+    public Ray() {
+        orig = new Vec3(0,0,0);
+        dir = new Vec3(0,0,0);
+    }
+
     public Vec3 origin() { return orig; }
     public Vec3 direction() { return dir; }
 

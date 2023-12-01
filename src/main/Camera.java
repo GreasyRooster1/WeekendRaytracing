@@ -65,9 +65,12 @@ public class Camera {
         HitRecord rec = new HitRecord();
         rec = world.hit(r, new Interval(0.0001, infinity), rec);
         if (rec.hitAnything) {
-            // create a new random ray on the sphere and evaluate its color
-            Vec3 direction = add(rec.normal,randomNormalizedVector());
-            return mult(0.5,rayColor(new Ray(rec.p, direction),depth-1, world));
+            Ray scattered = new Ray();
+            Color attenuation = new Color();
+            if(rec.mat.scatter(r,rec,attenuation,scattered)){
+                return mult(attenuation,rayColor(scattered,depth-1,world));
+            }
+            return new Vec3(0,0,0);
         }
 
         //Sky
