@@ -24,7 +24,7 @@ public class Renderer {
         Material centerMaterial = new Lambertian(0.85, 0.3, 0.5);
         Material leftMaterial = new Dielectric(1d);
         //Material rightMaterial = new Metal(0.8, 0.6, 0.2,0.9);
-        Material rightMaterial = new Metal(1,1, 1,0.9);
+        Material rightMaterial = new Metal(1,1, 1,0.1);
 
         world.add(new Sphere(point3(0,0,-1), 0.5, centerMaterial));
         world.add(new Sphere(point3(1,0,-1), 0.5, leftMaterial));

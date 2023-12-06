@@ -13,7 +13,7 @@ import main.Renderer;
 import static java.lang.Math.*;
 
 public class Vec3 {
-    double[] e;
+    public double[] e;
 
     public Vec3() {
         e = new double[]{0,0,0};

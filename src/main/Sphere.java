@@ -51,9 +51,9 @@ public class Sphere extends Hittable{
 //        if(pow(ray.origin().x()-center.x(),2)+pow(ray.origin().y()-center.y(),2)+pow(ray.origin().z()-center.z(),2)<radius*radius){
 //            return false;
 //        }
-        if(dist(ray.origin().x(),ray.origin().y(),ray.origin().z(),center.x(),center.y(),center.z())<radius){
-            return false;
-        }
+//        if(dist(ray.origin().x(),ray.origin().y(),ray.origin().z(),center.x(),center.y(),center.z())<radius){
+//            return false;
+//        }
 
         rec.t = root;
         rec.p = ray.at(rec.t);
