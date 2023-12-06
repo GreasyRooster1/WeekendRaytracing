@@ -9,6 +9,7 @@ import java.util.Random;
 
 import static java.lang.Math.*;
 import static main.Util.Vec3.*;
+import static processing.core.PApplet.norm;
 import static processing.core.PApplet.println;
 
 public class DebugTests {
@@ -41,8 +42,8 @@ public class DebugTests {
         //Vec3 n = new Vec3(r.nextDouble(), r.nextDouble(), r.nextDouble());
         //[0.7310258042274864, 0.33948373727270553, -0.5919054533292571]
         //[-0.08353942563887906, 0.8899921102066161, 0.44825797051909855]
-        Vec3 uv = new Vec3(0.7310258042274864, 0.33948373727270553, -0.5919054533292571);
-        Vec3 n = new Vec3(-0.08353942563887906, 0.8899921102066161, 0.44825797051909855);
+        Vec3 uv = normalize(new Vec3(1,1,0));
+        Vec3 n = new Vec3(0,-1,0);
         double etaiOverEtat = 1;
         double cosTheta = min(dot(uv.invert(), n), 1.0);
         Vec3 rOutPerp = mult(etaiOverEtat, add(uv, mult(cosTheta, n)));

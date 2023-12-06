@@ -25,7 +25,7 @@ public class Dielectric extends Material {
         Vec3 refracted = refract(direction,rec.normal,refractionRatio);
         // Vec3 refracted = rIn.direction();
 
-        scattered.set(new Ray(rec.p,refracted));
+        scattered.set(new Ray(rec.p,mult(refracted, rIn.direction().length())));
         return true;
     }
 }

@@ -59,7 +59,7 @@ public class Vec3 {
         return new Vec3(e[0]/t,e[1]/t,e[2]/t);
     }
 
-    double length() {
+    public double length() {
         return sqrt(length_squared());
     }
 
