@@ -5,12 +5,16 @@ import main.Material;
 import main.Util.Ray;
 import main.Util.Vec3;
 
+import java.util.Arrays;
+
 import static main.Util.Common.color;
 import static main.Util.Common.vec3;
 import static main.Util.Vec3.*;
+import static processing.core.PApplet.println;
 
 public class Dielectric extends Material {
     private double ir;
+    private boolean outputRay = true;
 
     public Dielectric(double _ir){
         ir = _ir;
@@ -23,7 +27,7 @@ public class Dielectric extends Material {
 
         Vec3 direction = normalize(rIn.direction());
         Vec3 refracted = refract(direction,rec.normal,refractionRatio);
-        // Vec3 refracted = rIn.direction();
+        //Vec3 refracted =rIn.direction();
 
         scattered.set(new Ray(rec.p,mult(refracted, rIn.direction().length())));
         return true;
