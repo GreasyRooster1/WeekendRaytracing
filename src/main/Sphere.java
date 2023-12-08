@@ -47,11 +47,8 @@ public class Sphere extends Hittable{
                 return false;
             }
         }
-
-//        if(pow(ray.origin().x()-center.x(),2)+pow(ray.origin().y()-center.y(),2)+pow(ray.origin().z()-center.z(),2)<radius*radius){
-//            return false;
-//        }
-//        if(dist(ray.origin().x(),ray.origin().y(),ray.origin().z(),center.x(),center.y(),center.z())<radius){
+//        Vec3 collisionPoint = ray.at(root);
+//        if(dist(collisionPoint.x(),collisionPoint.y(),collisionPoint.z(),center.x(),center.y(),center.z())<radius-0.0000001d){
 //            return false;
 //        }
 
