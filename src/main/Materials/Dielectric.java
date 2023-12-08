@@ -20,9 +20,10 @@ public class Dielectric extends Material {
     public boolean scatter(Ray rIn, HitRecord rec, Vec3 attenuation, Ray scattered) {
         attenuation.set(color(1,1,1));
         double refractionRatio = rec.front_face ? (1.0/ir) : ir;
+        Vec3 hitPointNormal = rec.front_face ? rec.normal :rec.normal.invert();
 
         Vec3 direction = normalize(rIn.direction());
-        Vec3 refracted = refract(direction,rec.normal,refractionRatio);
+        Vec3 refracted = refract(direction,hitPointNormal,refractionRatio);
         // Vec3 refracted = rIn.direction();
 
         scattered.set(new Ray(rec.p,mult(refracted, rIn.direction().length())));

@@ -22,7 +22,7 @@ public class Renderer {
 
         Material floorMaterial = new Lambertian(0.8, 0.8, 0.0);
         Material centerMaterial = new Lambertian(0.85, 0.3, 0.5);
-        Material leftMaterial = new Dielectric(1d);
+        Material leftMaterial = new Dielectric(1.5d);
         //Material rightMaterial = new Metal(0.8, 0.6, 0.2,0.9);
         Material rightMaterial = new Metal(1,1, 1,0.1);
 
