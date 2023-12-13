@@ -2,6 +2,7 @@ package main;
 
 import main.Util.*;
 
+import static java.lang.Math.tan;
 import static main.ProgressBar.updateProgressBar;
 import static main.Util.Common.*;
 import static main.Util.Vec3.*;
@@ -12,32 +13,43 @@ public class Camera {
     public int samplesPerPixel = 10;
     public int maxDepth = 10;
     private int imageHeight;
-    private Point3 center;
+    private Vec3 center;
     private Vec3 pixel00_loc;
     private Vec3 pixelDeltaU;
     private Vec3 pixelDeltaV;
+    double vfov = 90;
+    Vec3 lookfrom = point3(0,0,-1);  // Point camera is looking from
+    Vec3 lookat = point3(0,0,0);   // Point camera is looking at
+    Vec3 vup = vec3(0,1,0);
+    private Vec3 u, v, w;
 
     private void init(){
         imageHeight = (int)(imageWidth / aspectRatio);
         imageHeight = Math.max(imageHeight, 1);
 
-        center = point3(0, 0, 0);
+        center = lookfrom;
 
         // Determine viewport dimensions.
-        double focal_length = 1.0;
-        double viewport_height = 2.0;
+        double focal_length = sub(lookfrom,lookat).length();
+        double theta = degrees_to_radians(vfov);
+        double h = tan(theta/2);
+        double viewport_height = 2 * h * focal_length;
         double viewport_width = viewport_height * ((double)(imageWidth)/imageHeight);
 
         // Calculate the vectors across the horizontal and down the vertical viewport edges.
-        Vec3 viewport_u = vec3(viewport_width, 0, 0);
-        Vec3 viewport_v = vec3(0, -viewport_height, 0);
+        w = normalize(sub(lookfrom,lookat));
+        u = normalize(cross(vup,w));
+        v = cross(w,u);
+
+        Vec3 viewport_u = mult(viewport_width,u);
+        Vec3 viewport_v = mult(viewport_height,v.invert());
 
         // Calculate the horizontal and vertical delta vectors from pixel to pixel.
         pixelDeltaU = viewport_u.div(imageWidth);
         pixelDeltaV = viewport_v.div(imageHeight);
 
         // Calculate the location of the upper left pixel.
-        Vec3 viewport_upper_left = sub(sub(sub(center, new Vec3(0, 0, focal_length)),(viewport_u.div(2))),(viewport_v.div(2)));
+        Vec3 viewport_upper_left = sub(sub(sub(center,mult(focal_length,w)),div(viewport_u,2)), div(viewport_v,2));
         pixel00_loc = add(viewport_upper_left,mult(0.5,add(pixelDeltaU,pixelDeltaV)));
     }
     public void render(Hittable world){
@@ -89,7 +101,7 @@ public class Camera {
         Vec3 rayOrigin = center;
         Vec3 rayDirection = sub(pixelSample,rayOrigin);
 
-        return new Ray((Point3) rayOrigin, rayDirection);
+        return new Ray(rayOrigin, rayDirection);
     }
 
     private Vec3 pixel_sample_square() {

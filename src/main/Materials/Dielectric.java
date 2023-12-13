@@ -13,40 +13,89 @@ import static main.Util.Vec3.*;
 
 public class Dielectric extends Material {
     private double ir;
+    private Vec3 albedo = new Vec3(1,1,1);
 
     public Dielectric(double _ir){
         ir = _ir;
     }
+    public Dielectric(double _ir,Vec3 _albedo){
+        ir = _ir;
+        albedo = _albedo;
+    }
 
     @Override
     public boolean scatter(Ray rIn, HitRecord rec, Vec3 attenuation, Ray scattered) {
-        attenuation.set(color(1,1,1));
+        attenuation.set(albedo);
 
-        double refractionRatio = rec.front_face ? (1.0/ir) : ir;
-        Vec3 direction = normalize(rIn.direction());
-
-        //this shouldn't be necessary, yet here we are
-        Vec3 hitPointNormal = rec.front_face ? rec.normal: rec.normal.invert();
-
-        double cosTheta = min(dot(direction, hitPointNormal), 1.0);
-        double sinTheta = sqrt(1.0 - cosTheta*cosTheta);
-
-        boolean cannotRefract = refractionRatio * sinTheta > 1.0;
-        Vec3 scatterDirection = new Vec3();
-
-        if (cannotRefract || reflectance(cosTheta, refractionRatio) > Main.app.random(1)) {
-            scatterDirection = reflect(direction, hitPointNormal);
-        }else {
-            scatterDirection = refract(direction, hitPointNormal, refractionRatio);
+        // Dielectric scattering: Determine the outward normal and the refraction indexes ratio
+        Vec3 outwardNormal;
+        double refIdxRatio;
+        Vec3 unitDirection = normalize(rIn.direction());
+        double dt = dot(unitDirection, rec.normal);
+        if (dt > 0.f)
+        {
+            outwardNormal = rec.normal.invert();
+            refIdxRatio = ir;
+        }
+        else
+        {
+            outwardNormal = rec.normal;
+            refIdxRatio = 1.f / ir;
         }
 
-        scattered.set(new Ray(rec.p,scatterDirection));
+        // Determine the reflection probability
+        Vec3 refracted = new Vec3();
+        double reflectProb = 1.f;
+        if (getRefractedVector(unitDirection, outwardNormal, refIdxRatio, refracted))
+        {
+            // Compute the reflection probability
+            if (dt > 0.f)
+            {
+                double discriminant = 1.f - ir * ir * (1.f - dt * dt);
+
+                if (discriminant > 0.f)
+                {
+                    reflectProb = getSchlickApproximation(sqrt(discriminant), ir);
+                }
+            }
+            else
+            {
+                reflectProb = getSchlickApproximation(-dt, ir);
+            }
+        }
+
+        // Reflect or refract depending on the reflection probability
+        if (reflectProb == 1.f || Main.app.random(1) < reflectProb)
+        {
+            Vec3 reflected = getReflectedVector(rIn.direction(), rec.normal);
+            scattered.set(new Ray(rec.p, reflected));
+        }
+        else
+        {
+            scattered.set(new Ray(rec.p, refracted));
+        }
+
         return true;
     }
-    private static double reflectance(double cosine, double ref_idx) {
+
+    private Vec3 getReflectedVector(Vec3 direction, Vec3 normal) {
+        return reflect(direction,normal);
+    }
+
+    private boolean getRefractedVector(Vec3 v,Vec3 n, double refIdxRatio,Vec3 refracted) {
+        double dt = dot(v, n);
+        double discriminant = 1.f - refIdxRatio * refIdxRatio * (1.f - dt * dt);
+        if (discriminant > 0.f)
+        {
+            refracted.set(sub(mult(refIdxRatio,sub(v,mult(n,dt))),mult(n,sqrt(discriminant))));
+            return true;
+        }
+        return false;
+    }
+
+    private static double getSchlickApproximation(double cosine, double refIdx) {
         // Use Schlick's approximation for reflectance.
-        double r0 = (1-ref_idx) / (1+ref_idx);
-        r0 = r0*r0;
-        return r0 + (1-r0)*pow((1 - cosine),5);
+        double r0 = pow((1.f - refIdx) / (1.f + refIdx), 2);
+        return r0 + (1.f - r0) * pow(1.f - cosine, 5);
     }
 }
