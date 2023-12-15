@@ -1,5 +1,6 @@
 package main;
 
+import main.ThreadedRendering.ThreadedRendering;
 import main.Util.*;
 
 import static java.lang.Math.tan;
@@ -12,7 +13,7 @@ public class Camera {
     public int imageWidth = 400;
     public int samplesPerPixel = 10;
     public int maxDepth = 10;
-    private int imageHeight;
+    public int imageHeight;
     private Vec3 center;
     private Vec3 pixel00_loc;
     private Vec3 pixelDeltaU;
@@ -60,10 +61,11 @@ public class Camera {
         defocusDiskV = mult(v,defocusRadius);
     }
     public void render(Hittable world){
-        if(Renderer.threadedRenderingEnabled){
-
-        }
         init();
+        if(Renderer.threadedRenderingEnabled){
+            ThreadedRendering.start(this,world);
+            return;
+        }
 
         int iterationCount = 0;
         for (int j = 0; j < imageHeight; ++j) {
@@ -80,7 +82,7 @@ public class Camera {
         }
     }
 
-    private Vec3 rayColor(Ray r, int depth, Hittable world){
+    public Vec3 rayColor(Ray r, int depth, Hittable world){
         if(depth<=0){
             return new Color(0,0,0);
         }
@@ -102,7 +104,7 @@ public class Camera {
         return Vec3.add(Vec3.mult((1d-a),end),Vec3.mult(a,start));
     }
 
-    private Ray getRay(int i, int j){
+    public Ray getRay(int i, int j){
         // Get a randomly sampled camera ray for the pixel at location i,j.
 
         Vec3 pixelCenter = add(add(pixel00_loc,mult(i,pixelDeltaU)),mult(j,pixelDeltaV));
