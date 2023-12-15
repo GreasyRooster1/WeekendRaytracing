@@ -31,4 +31,8 @@ public class Color extends Vec3{
         Vec3 avgCol = new Vec3(r,g,b);
         Main.app.set(x,y,avgCol.rgb());
     }
+
+    public static void write(int x,int y,int col){
+        Main.app.set(x,y,col);
+    }
 }

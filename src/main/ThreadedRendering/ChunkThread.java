@@ -27,9 +27,11 @@ public class ChunkThread extends Thread{
                     Ray r = cam.getRay(i, j);
                     pixelColor= pixelColor.add(cam.rayColor(r,cam.maxDepth, world));
                 }
-                Color.write(i,j,pixelColor,cam.samplesPerPixel);
+                PixelCache.write(i,j,pixelColor,cam.samplesPerPixel);
             }
         }
+        System.out.println("ChunkThread with region "+region.min+", "+region.max+" finished!");
+        ThreadedRendering.finishChunk();
     }
 
     public void setRegion(Interval interval) {

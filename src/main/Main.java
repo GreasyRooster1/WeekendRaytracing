@@ -25,6 +25,10 @@ public class Main extends PApplet {
         redraw();
     }
 
+    public void draw(){
+        noLoop();
+    }
+
     public static void main(String[] passedArgs) {
         String[] appletArgs = new String[] { "main.Main" };
         PApplet.main(appletArgs);
