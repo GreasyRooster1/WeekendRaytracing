@@ -60,6 +60,9 @@ public class Camera {
         defocusDiskV = mult(v,defocusRadius);
     }
     public void render(Hittable world){
+        if(Renderer.threadedRenderingEnabled){
+
+        }
         init();
 
         int iterationCount = 0;

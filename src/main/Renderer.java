@@ -14,6 +14,8 @@ import static processing.core.PApplet.println;
 
 public class Renderer {
     public static PApplet app;
+    public static boolean threadedRenderingEnabled;
+
     public static void setup() {
         app = Main.app;
     }
@@ -74,6 +76,8 @@ public class Renderer {
 
         cam.defocusAngle = 0.6;
         cam.focusDist = 10.0;
+
+        threadedRenderingEnabled = true;
 
         cam.render(world);
     }
