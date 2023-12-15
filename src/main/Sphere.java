@@ -12,7 +12,7 @@ import static processing.core.PApplet.dist;
 
 public class Sphere extends Hittable{
     //this form of programming reminds me of mvcode
-    private Vec3 center;
+
     private double radius;
     private Material mat;
     Sphere(Vec3 _center, double _radius,Material _material){

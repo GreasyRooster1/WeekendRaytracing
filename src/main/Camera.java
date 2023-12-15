@@ -7,6 +7,7 @@ import static java.lang.Math.tan;
 import static main.ProgressBar.updateProgressBar;
 import static main.Util.Common.*;
 import static main.Util.Vec3.*;
+import static processing.core.PApplet.dist;
 
 public class Camera {
     public double aspectRatio = Main.aspectRatio;
@@ -27,6 +28,7 @@ public class Camera {
     public double focusDist = 10;
     private Vec3   defocusDiskU;  // Defocus disk horizontal radius
     private Vec3   defocusDiskV;
+    public double skyIntensity = 1;
 
     private void init(){
         imageHeight = (int)(imageWidth / aspectRatio);
@@ -102,7 +104,7 @@ public class Camera {
         Color start = new Color(0.5, 0.7, 1.0);
         Color end = new Color(1.0, 1.0, 1.0);
         double a = 0.5*(rayDirection.y() + 1.0);
-        return Vec3.add(Vec3.mult((1d-a),end),Vec3.mult(a,start));
+        return mult(Vec3.add(Vec3.mult((1d-a),end),Vec3.mult(a,start)),skyIntensity);
     }
 
     public Ray getRay(int i, int j){
@@ -128,6 +130,13 @@ public class Camera {
         // Returns a random point in the camera defocus disk.
         Vec3 p = randomInUnitDisk();
         return add(add(center,mult(p.e[0],defocusDiskU)),mult(p.e[1],defocusDiskV));
+    }
+
+    public void setFocusObject(Hittable hittable){
+        focusDist = dist((float) hittable.center.x(), (float) hittable.center.y(), (float) hittable.center.z(), (float) lookfrom.x(), (float) lookfrom.y(), (float) lookfrom.z());
+    }
+    public void setFocusObject(Vec3 center){
+        focusDist = dist((float) center.x(), (float) center.y(), (float) center.z(), (float) lookfrom.x(), (float) lookfrom.y(), (float) lookfrom.z());
     }
 
 }

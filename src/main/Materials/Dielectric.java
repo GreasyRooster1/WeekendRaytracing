@@ -22,6 +22,10 @@ public class Dielectric extends Material {
         ir = _ir;
         albedo = _albedo;
     }
+    public Dielectric(Vec3 _albedo,double _ir){
+        ir = _ir;
+        albedo = _albedo;
+    }
 
     @Override
     public boolean scatter(Ray rIn, HitRecord rec, Vec3 attenuation, Ray scattered) {
