@@ -22,6 +22,10 @@ public class Camera {
     Vec3 lookat = point3(0,0,0);   // Point camera is looking at
     Vec3 vup = vec3(0,1,0);
     private Vec3 u, v, w;
+    public double defocusAngle = 0;  // Variation angle of rays through each pixel
+    public double focusDist = 10;
+    private Vec3   defocusDiskU;  // Defocus disk horizontal radius
+    private Vec3   defocusDiskV;
 
     private void init(){
         imageHeight = (int)(imageWidth / aspectRatio);
@@ -30,10 +34,9 @@ public class Camera {
         center = lookfrom;
 
         // Determine viewport dimensions.
-        double focal_length = sub(lookfrom,lookat).length();
         double theta = degrees_to_radians(vfov);
         double h = tan(theta/2);
-        double viewport_height = 2 * h * focal_length;
+        double viewport_height = 2 * h * focusDist;
         double viewport_width = viewport_height * ((double)(imageWidth)/imageHeight);
 
         // Calculate the vectors across the horizontal and down the vertical viewport edges.
@@ -49,8 +52,12 @@ public class Camera {
         pixelDeltaV = viewport_v.div(imageHeight);
 
         // Calculate the location of the upper left pixel.
-        Vec3 viewport_upper_left = sub(sub(sub(center,mult(focal_length,w)),div(viewport_u,2)), div(viewport_v,2));
+        Vec3 viewport_upper_left = sub(sub(sub(center,mult(focusDist,w)),div(viewport_u,2)), div(viewport_v,2));
         pixel00_loc = add(viewport_upper_left,mult(0.5,add(pixelDeltaU,pixelDeltaV)));
+
+        double defocusRadius = focusDist * tan(degrees_to_radians(defocusAngle / 2));
+        defocusDiskU = mult(u,defocusRadius);
+        defocusDiskV = mult(v,defocusRadius);
     }
     public void render(Hittable world){
         init();
@@ -98,7 +105,7 @@ public class Camera {
         Vec3 pixelCenter = add(add(pixel00_loc,mult(i,pixelDeltaU)),mult(j,pixelDeltaV));
         Vec3 pixelSample = add(pixelCenter,pixel_sample_square());
 
-        Vec3 rayOrigin = center;
+        Vec3 rayOrigin = (defocusAngle <= 0) ? center : defocusDiskSample();
         Vec3 rayDirection = sub(pixelSample,rayOrigin);
 
         return new Ray(rayOrigin, rayDirection);
@@ -109,6 +116,12 @@ public class Camera {
         double px = -0.5 + Main.app.random(1);
         double py = -0.5 + Main.app.random(1);
         return add(mult(px,pixelDeltaU),mult(py,pixelDeltaV));
+    }
+
+    Vec3 defocusDiskSample() {
+        // Returns a random point in the camera defocus disk.
+        Vec3 p = randomInUnitDisk();
+        return add(add(center,mult(p.e[0],defocusDiskU)),mult(p.e[1],defocusDiskV));
     }
 
 }

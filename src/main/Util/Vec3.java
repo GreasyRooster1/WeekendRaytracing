@@ -11,6 +11,7 @@ import main.Main;
 import main.Renderer;
 
 import static java.lang.Math.*;
+import static main.Util.Common.vec3;
 
 public class Vec3 {
     public double[] e;
@@ -166,5 +167,13 @@ public class Vec3 {
         Vec3 rOutPerp =  mult(etaiOverEtat,add(uv,mult(cosTheta,n)));
         Vec3 rOutParallel = mult(-sqrt(abs(1.0 - rOutPerp.length_squared())),n);
         return add(rOutPerp,rOutParallel);
+    }
+
+    public static Vec3 randomInUnitDisk() {
+        while (true) {
+            Vec3 p = vec3(Main.app.random(-1,1), Main.app.random(-1,1), 0);
+            if (p.length_squared() < 1)
+                return p;
+        }
     }
 }
