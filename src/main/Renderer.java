@@ -20,31 +20,60 @@ public class Renderer {
     public static void render(){
         HittableList world = new HittableList();
 
-        Material material_ground = new Lambertian(color(0.8, 0.8, 0.0));
-        Material material_center = new Lambertian(color(0.1, 0.2, 0.5));
-        Material material_left   = new Dielectric(1.5);
-        Material material_right  = new Metal(color(0.8, 0.6, 0.2), 0.2);
+        Material ground_material = new Lambertian(color(0.5, 0.5, 0.5));
+        world.add(new Sphere(point3(0,-1000,0), 1000, ground_material));
 
-        world.add(new Sphere(point3( 0.0, -100.5, -1.0), 100.0, material_ground));
-        world.add(new Sphere(point3( 0.0,    0.0, -1.0),   0.5, material_center));
-        world.add(new Sphere(point3(-1.0,    0.0, -1.0),   0.5, material_left));
-        world.add(new Sphere(point3(-1.0,    0.0, -1.0),  -0.4, material_left));
-        world.add(new Sphere(point3( 1.0,    0.0, -1.0),   0.5, material_right));
+        for (int a = -11; a < 11; a++) {
+            for (int b = -11; b < 11; b++) {
+                double choose_mat = Main.app.random(1);
+                Vec3 center = new Vec3(a + 0.9*Main.app.random(1), 0.2, b + 0.9*Main.app.random(1));
+
+                if (add(center, new Vec3(4, 0.2, 0)).length() > 0.9) {
+                    Material sphereMaterial;
+
+                    if (choose_mat < 0.8) {
+                        // diffuse
+                        Vec3 albedo = mult(Color.random(),Color.random());
+                        sphereMaterial = new Lambertian(albedo);
+                        world.add(new Sphere( center, 0.2, sphereMaterial));
+                    } else if (choose_mat < 0.95) {
+                        // metal
+                        Vec3 albedo = Color.random(0.5f, 1);
+                        double fuzz = Main.app.random(0, 0.5f);
+                        sphereMaterial = new Metal(albedo, fuzz);
+                        world.add(new Sphere(center, 0.2, sphereMaterial));
+                    } else {
+                        // glass
+                        sphereMaterial = new Dielectric(1.5);
+                        world.add(new Sphere(center, 0.2, sphereMaterial));
+                    }
+                }
+            }
+        }
+
+        Material material1 = new Dielectric(1.5);
+        world.add(new Sphere(point3(0, 1, 0), 1.0, material1));
+
+        Material material2 = new Lambertian(color(0.4, 0.2, 0.1));
+        world.add(new Sphere(point3(-4, 1, 0), 1.0, material2));
+
+        Material material3 = new Metal(color(0.7, 0.6, 0.5), 0.0);
+        world.add(new Sphere(point3(4, 1, 0), 1.0, material3));
 
         Camera cam = new Camera();
 
         cam.aspectRatio = 16.0 / 9.0;
-        cam.imageWidth  = Main.app.width;
-        cam.samplesPerPixel=100; // 10 for fast rendering, 100 for antialiasing rendering
-        cam.maxDepth=50;
+        cam.imageWidth = Main.app.width;
+        cam.samplesPerPixel = 10;
+        cam.maxDepth = 50;
 
-        cam.vfov     = 20;
-        cam.lookfrom = vec3(-2,2,1);
-        cam.lookat   = vec3(0,0,-1);
-        cam.vup      = vec3(0,1,0);
+        cam.vfov = 20;
+        cam.lookfrom = point3(13,2,3);
+        cam.lookat = point3(0,0,0);
+        cam.vup = vec3(0,1,0);
 
-        cam.defocusAngle = 10.0;
-        cam.focusDist = 3.5;
+        cam.defocusAngle = 0.6;
+        cam.focusDist = 10.0;
 
         cam.render(world);
     }
