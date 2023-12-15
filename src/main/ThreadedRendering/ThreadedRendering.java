@@ -4,6 +4,7 @@ import main.Camera;
 import main.Hittable;
 import main.Main;
 import main.Util.Interval;
+import main.Util.TimeKeeper;
 
 import static java.lang.Math.floor;
 import static processing.core.PApplet.append;
@@ -11,12 +12,12 @@ import static processing.core.PApplet.println;
 
 public class ThreadedRendering {
     public static ChunkThread[] chunkThreads = {};
-    public static int chunkAmount = 10;
+    public static int chunkAmount = 30;
     private static int chunksFinished = 0;
     public static void start(Camera cam, Hittable world) {
         PixelCache.setup(cam.imageWidth,cam.imageHeight);
         println(cam.imageWidth,cam.imageHeight);
-        for(int i=0;i<chunkAmount-1;i++){
+        for(int i=0;i<chunkAmount;i++){
             ChunkThread chunkThread = new ChunkThread();
             chunkThread.setRegion(new Interval(floor(i * ((double) cam.imageHeight /chunkAmount)), floor((i + 1) * ((double) cam.imageHeight /chunkAmount))));
             chunkThread.cam = cam;
@@ -26,14 +27,18 @@ public class ThreadedRendering {
         for(ChunkThread c:chunkThreads){
             c.start();
         }
-        if(chunksFinished==chunkAmount){
-            PixelCache.pushToDisplay();
-            println("rendering done!");
-        }
     }
 
     public static void finishChunk() {
         chunksFinished++;
-        PixelCache.pushToDisplay();
+        checkDone();
+    }
+
+    public static void checkDone(){
+        if(chunksFinished>=chunkAmount){
+            PixelCache.pushToDisplay();
+            println("rendering done!");
+            TimeKeeper.endTimeKeep();
+        }
     }
 }

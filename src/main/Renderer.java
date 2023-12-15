@@ -66,7 +66,7 @@ public class Renderer {
 
         cam.aspectRatio = 16.0 / 9.0;
         cam.imageWidth = Main.app.width;
-        cam.samplesPerPixel = 10;
+        cam.samplesPerPixel = 500;
         cam.maxDepth = 50;
 
         cam.vfov = 20;
@@ -77,9 +77,10 @@ public class Renderer {
         cam.defocusAngle = 0.6;
         cam.focusDist = 10.0;
 
-        threadedRenderingEnabled = true;
-
+        threadedRenderingEnabled = false;
+        TimeKeeper.startTimeKeep();
         cam.render(world);
+
     }
 
 

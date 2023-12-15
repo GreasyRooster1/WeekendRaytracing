@@ -38,10 +38,13 @@ public class PixelCache {
     }
 
     public static void pushToDisplay(){
+        Main.app.loadPixels();
         for (int i = 0; i < image.length; i++) {
             //println(i%Main.app.width,floor((float) i /Main.app.height));
-            Color.write(i%Main.app.width,floor((float) i /Main.app.height),image[i]);
+            //Color.write(i%Main.app.width,floor((float) i /Main.app.height),image[i]);
+            Main.app.pixels[i]=image[i];
         }
+        Main.app.updatePixels();
         Main.app.loop();
     }
 }

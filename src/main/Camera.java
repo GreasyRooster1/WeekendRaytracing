@@ -80,6 +80,7 @@ public class Camera {
                 updateProgressBar(iterationCount,imageWidth*imageHeight);
             }
         }
+        TimeKeeper.endTimeKeep();
     }
 
     public Vec3 rayColor(Ray r, int depth, Hittable world){
