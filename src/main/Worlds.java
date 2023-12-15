@@ -1,6 +1,7 @@
 package main;
 
 import main.Materials.Dielectric;
+import main.Materials.Emission;
 import main.Materials.Lambertian;
 import main.Materials.Metal;
 import main.Util.Color;
@@ -73,7 +74,7 @@ public class Worlds {
         TimeKeeper.startTimeKeep();
         cam.render(world);
     }
-
+    //im a material girl and i am in a:
     public static void materialWorld(){
         HittableList world = new HittableList();
 
@@ -87,6 +88,41 @@ public class Worlds {
         world.add(new Sphere(point3(0,1,0), 1, middleMaterial));
         world.add(new Sphere(point3(0,1,2), 1, leftMaterial));
         world.add(new Sphere(point3(0,1,-2), 1, rightMaterial));
+        Camera cam = new Camera();
+
+        cam.aspectRatio = 16.0 / 9.0;
+        cam.imageWidth = Main.app.width;
+        cam.samplesPerPixel = 50;
+        cam.maxDepth = 50;
+
+        cam.vfov = 20;
+        cam.lookfrom = point3(13,7,6);
+        cam.lookat = point3(0,0,0);
+        cam.vup = vec3(0,1,0);
+
+        cam.defocusAngle = 0.6;
+        cam.setFocusObject(new Vec3(0,1,0));
+
+        cam.skyIntensity = 0.5;
+
+        TimeKeeper.startTimeKeep();
+        cam.render(world);
+    }
+    public static void topLight(){
+        HittableList world = new HittableList();
+
+        Material groundMaterial = new Lambertian(color(0.5, 0.5, 0.5));
+        Material middleMaterial = new Dielectric(color(1,1,1),1.5f);
+        Material rightMaterial = new Lambertian(color(0.4, 0.5, 0.8));
+        Material leftMaterial = new Metal(color(1, 0.6, 0.7),0.1f);
+        Material lightMaterial = new Emission(color(1, 0.6, 0.7));
+
+        world.add(new Sphere(point3(0,-1000,0), 1000, groundMaterial));
+
+        world.add(new Sphere(point3(0,1,0), 1, middleMaterial));
+        world.add(new Sphere(point3(0,1,2), 1, leftMaterial));
+        world.add(new Sphere(point3(0,1,-2), 1, rightMaterial));
+        world.add(new Sphere(point3(0,3,0), 0.5f, lightMaterial));
         Camera cam = new Camera();
 
         cam.aspectRatio = 16.0 / 9.0;
