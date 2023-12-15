@@ -115,7 +115,7 @@ public class Worlds {
         Material middleMaterial = new Dielectric(color(1,1,1),1.5f);
         Material rightMaterial = new Lambertian(color(0.4, 0.5, 0.8));
         Material leftMaterial = new Metal(color(1, 0.6, 0.7),0.1f);
-        Material lightMaterial = new Emission(color(1, 0.6, 0.7));
+        Material lightMaterial = new Emission(color(4, 4,4));
 
         world.add(new Sphere(point3(0,-1000,0), 1000, groundMaterial));
 
@@ -127,7 +127,7 @@ public class Worlds {
 
         cam.aspectRatio = 16.0 / 9.0;
         cam.imageWidth = Main.app.width;
-        cam.samplesPerPixel = 50;
+        cam.samplesPerPixel = 1000;
         cam.maxDepth = 50;
 
         cam.vfov = 20;
@@ -138,7 +138,7 @@ public class Worlds {
         cam.defocusAngle = 0.6;
         cam.setFocusObject(new Vec3(0,1,0));
 
-        cam.skyIntensity = 0.5;
+        cam.skyIntensity = 0;
 
         TimeKeeper.startTimeKeep();
         cam.render(world);
