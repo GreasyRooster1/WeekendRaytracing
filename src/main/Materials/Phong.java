@@ -30,7 +30,7 @@ public class Phong extends Material {
         for(PointLight light:rec.world.lights){
             Vec3 directionToLight = sub(rec.p,light.position).normalize();
             double lightDistance = dist(rec.p,light.position);
-            if(!rec.world.hit(new Ray(rec.p,directionToLight),new Interval(0,lightDistance),rec)){
+            if(!rec.world.hit(new Ray(rec.p,directionToLight), new Interval(0,lightDistance),rec)){
                 double lightIntensity = dot(reflect(directionToLight,rec.normal),rIn.direction());
                 specularTotal.add(mult(lightIntensity,light.color));
             }

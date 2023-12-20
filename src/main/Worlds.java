@@ -94,14 +94,14 @@ public class Worlds {
         cam.maxDepth = 50;
 
         cam.vfov = 20;
-        cam.lookfrom = point3(13,7,6);
+        cam.lookfrom = point3(13,3,6);
         cam.lookat = point3(0,0,0);
         cam.vup = vec3(0,1,0);
 
         cam.defocusAngle = 0.6;
         cam.setFocusObject(new Vec3(0,1,0));
 
-        cam.skyIntensity = 0.5;
+        cam.skyIntensity = 1;
 
         TimeKeeper.startTimeKeep();
         cam.render(world);
@@ -167,7 +167,7 @@ public class Worlds {
 
         cam.aspectRatio = 16.0 / 9.0;
         cam.imageWidth = Main.app.width;
-        cam.samplesPerPixel = 1000;
+        cam.samplesPerPixel = 100;
         cam.maxDepth = 50;
 
         cam.vfov = 20;
