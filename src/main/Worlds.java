@@ -2,6 +2,7 @@ package main;
 
 import main.Materials.*;
 import main.Objects.HittableList;
+import main.Objects.PointLight;
 import main.Objects.Sphere;
 import main.Util.Color;
 import main.Util.TimeKeeper;
@@ -86,6 +87,9 @@ public class Worlds {
         world.add(new Sphere(point3(0,1,0), 1, middleMaterial));
         world.add(new Sphere(point3(0,1,2), 1, leftMaterial));
         world.add(new Sphere(point3(0,1,-2), 1, rightMaterial));
+
+        world.addLight(new PointLight(vec3(1,2,3),vec3(1,1,1)));
+
         Camera cam = new Camera();
 
         cam.aspectRatio = 16.0 / 9.0;

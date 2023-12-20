@@ -26,12 +26,15 @@ public class Phong extends Material {
         if(scatterDirection.nearZero()){
             scatterDirection = rec.normal;
         }
+
         Vec3 specularTotal = new Vec3();
         for(PointLight light:rec.world.lights){
+
             Vec3 directionToLight = sub(rec.p,light.position).normalize();
             double lightDistance = dist(rec.p,light.position);
-            if(!rec.world.hit(new Ray(rec.p,directionToLight), new Interval(0,lightDistance),rec)){
-                double lightIntensity = dot(reflect(directionToLight,rec.normal),rIn.direction());
+
+            if(!rec.world.hitSomething(new Ray(rec.p,directionToLight), new Interval(0,lightDistance))){
+                double lightIntensity = dot( reflect(directionToLight, rec.normal).invert() ,rIn.direction());
                 specularTotal.add(mult(lightIntensity,light.color));
             }
         }
