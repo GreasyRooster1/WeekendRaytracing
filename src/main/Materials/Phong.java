@@ -30,10 +30,10 @@ public class Phong extends Material {
         Vec3 specularTotal = new Vec3();
         for(PointLight light:rec.world.lights){
 
-            Vec3 directionToLight = sub(rec.p,light.position).normalize();
-            double lightDistance = dist(rec.p,light.position);
+            Vec3 directionToLight = sub(rec.collisionPoint,light.position).normalize();
+            double lightDistance = dist(rec.collisionPoint,light.position);
 
-            if(!rec.world.hitSomething(new Ray(rec.p,directionToLight), new Interval(0,lightDistance))){
+            if(!rec.world.hitSomething(new Ray(rec.collisionPoint,directionToLight), new Interval(0,lightDistance))){
                 double lightIntensity = dot( reflect(directionToLight, rec.normal).invert() ,rIn.direction());
                 specularTotal.add(mult(lightIntensity,light.color));
             }
@@ -41,7 +41,7 @@ public class Phong extends Material {
         Vec3 specular = specularTotal;
 
         //set() just acts as a pass-by-pointer equals operation
-        scattered.set(new Ray(rec.p,scatterDirection));
+        scattered.set(new Ray(rec.collisionPoint,scatterDirection));
         attenuation.set(add(albedo,specular));
 
         return true;

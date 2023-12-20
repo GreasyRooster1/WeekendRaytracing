@@ -1,7 +1,6 @@
 package main;
 
 import main.Objects.HittableList;
-import main.Util.Point3;
 import main.Util.Ray;
 import main.Util.Vec3;
 
@@ -11,9 +10,9 @@ public class HitRecord {
 
     // this seems unintuitive, but this class just contains all the data for a hit
     // in practice this actually makes things easier
-    public Vec3 p;
+    public Vec3 collisionPoint;
     public Vec3 normal;
-    public Material mat;
+    public Material material;
     public double t;
     public boolean front_face;
 
@@ -30,9 +29,9 @@ public class HitRecord {
     }
 
     public void set(HitRecord t) {
-        p = t.p;
+        collisionPoint = t.collisionPoint;
         normal=t.normal;
-        mat = t.mat;
+        material = t.material;
         this.t = t.t;
         front_face = t.front_face;
         //hitAnything = t.hitAnything;

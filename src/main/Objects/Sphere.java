@@ -55,11 +55,11 @@ public class Sphere extends Hittable{
 //        }
 
         rec.t = root;
-        rec.p = ray.at(rec.t);
-        Vec3 outward_normal = div(sub(rec.p,center),radius);
+        rec.collisionPoint = ray.at(rec.t);
+        Vec3 outward_normal = div(sub(rec.collisionPoint,center),radius);
         rec.set_face_normal(ray, outward_normal);
-        rec.normal = div(sub(rec.p,center),radius);
-        rec.mat = mat;
+        rec.normal = div(sub(rec.collisionPoint,center),radius);
+        rec.material = mat;
         return true;
     }
 

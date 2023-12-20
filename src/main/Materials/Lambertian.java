@@ -28,7 +28,7 @@ public class Lambertian extends Material {
         }
 
         //set() just acts as a pass-by-pointer equals operation
-        scattered.set(new Ray(rec.p,scatterDirection));
+        scattered.set(new Ray(rec.collisionPoint,scatterDirection));
         attenuation.set(albedo);
 
         return true;

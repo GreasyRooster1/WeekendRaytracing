@@ -7,8 +7,6 @@ import main.Util.Ray;
 import main.Util.Vec3;
 
 import static java.lang.Math.*;
-import static main.Util.Common.color;
-import static main.Util.Common.vec3;
 import static main.Util.Vec3.*;
 
 public class Dielectric extends Material {
@@ -72,11 +70,11 @@ public class Dielectric extends Material {
         if (reflectProb == 1.f || Main.app.random(1) < reflectProb)
         {
             Vec3 reflected = getReflectedVector(rIn.direction(), rec.normal);
-            scattered.set(new Ray(rec.p, reflected));
+            scattered.set(new Ray(rec.collisionPoint, reflected));
         }
         else
         {
-            scattered.set(new Ray(rec.p, refracted));
+            scattered.set(new Ray(rec.collisionPoint, refracted));
         }
 
         return true;
