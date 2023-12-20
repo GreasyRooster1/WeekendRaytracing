@@ -1,17 +1,12 @@
 package main.ThreadedRendering;
 
 import main.Camera;
-import main.Hittable;
+import main.Objects.Hittable;
 import main.Main;
 import main.Util.Color;
 import main.Util.Interval;
 import main.Util.Ray;
 import main.Util.Vec3;
-
-import javax.swing.plaf.synth.Region;
-
-import static main.Camera.*;
-import static main.ProgressBar.updateProgressBar;
 
 public class ChunkThread extends Thread{
     public Hittable world;

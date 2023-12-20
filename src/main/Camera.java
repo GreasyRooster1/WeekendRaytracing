@@ -1,5 +1,6 @@
 package main;
 
+import main.Objects.Hittable;
 import main.ThreadedRendering.ThreadedRendering;
 import main.Util.*;
 
@@ -96,7 +97,6 @@ public class Camera {
             Vec3 colorFromEmission = rec.mat.emitted(0,0, rec.p);
             if(!rec.mat.scatter(r,rec,attenuation,scattered)){
                 return colorFromEmission;
-
             }
             Vec3 colorFromScatter =  mult(attenuation,rayColor(scattered,depth-1,world));
             return add(colorFromEmission,colorFromScatter);

@@ -1,9 +1,8 @@
 package main;
 
-import main.Materials.Dielectric;
-import main.Materials.Emission;
-import main.Materials.Lambertian;
-import main.Materials.Metal;
+import main.Materials.*;
+import main.Objects.HittableList;
+import main.Objects.Sphere;
 import main.Util.Color;
 import main.Util.TimeKeeper;
 import main.Util.Vec3;

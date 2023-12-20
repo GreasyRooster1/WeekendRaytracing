@@ -1,5 +1,6 @@
-package main;
+package main.Objects;
 
+import main.HitRecord;
 import main.Util.Interval;
 import main.Util.Ray;
 

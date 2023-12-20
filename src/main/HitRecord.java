@@ -18,7 +18,7 @@ public class HitRecord {
     //public boolean hitAnything;
 
 
-    void set_face_normal(Ray r, Vec3 outward_normal) {
+    public void set_face_normal(Ray r, Vec3 outward_normal) {
         // Sets the hit record normal vector.
         // NOTE: the parameter `outward_normal` is assumed to have unit length.
 

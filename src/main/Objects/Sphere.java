@@ -1,7 +1,8 @@
-package main;
+package main.Objects;
 
+import main.HitRecord;
+import main.Material;
 import main.Util.Interval;
-import main.Util.Point3;
 import main.Util.Ray;
 import main.Util.Vec3;
 import processing.core.PApplet;
@@ -15,7 +16,7 @@ public class Sphere extends Hittable{
 
     private double radius;
     private Material mat;
-    Sphere(Vec3 _center, double _radius,Material _material){
+    public Sphere(Vec3 _center, double _radius, Material _material){
         center = _center;
         radius = _radius;
         mat = _material;

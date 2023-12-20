@@ -1,8 +1,7 @@
 package main.ThreadedRendering;
 
 import main.Camera;
-import main.Hittable;
-import main.Main;
+import main.Objects.Hittable;
 import main.Util.Interval;
 import main.Util.TimeKeeper;
 
