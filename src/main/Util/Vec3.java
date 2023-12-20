@@ -112,6 +112,9 @@ public class Vec3 {
     public static Vec3 normalize(Vec3 v) {
         return div(v,v.length());
     }
+    public Vec3 normalize() {
+        return div(length());
+    }
 
     public int rgb() {
         return Main.app.color((int) (e[0]*255d),(int) (e[1]*255d),(int) (e[2]*255d));

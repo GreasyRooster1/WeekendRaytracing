@@ -1,5 +1,7 @@
 package main.Util;
 
+import processing.core.PApplet;
+
 public class Common {
     //Come get to know me
     //and you won't want to leave after tonight.
@@ -25,5 +27,9 @@ public class Common {
     }
     public static Point3 point3(double x,double y,double z){
         return new Point3(x,y,z);
+    }
+
+    public static double dist(Vec3 u,Vec3 v){
+        return PApplet.dist((float) u.x(),(float) u.y(),(float) u.z(),(float) v.x(),(float) v.y(),(float) v.z());
     }
 }

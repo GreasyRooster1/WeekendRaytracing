@@ -78,7 +78,7 @@ public class Worlds {
 
         Material groundMaterial = new Lambertian(color(0.5, 0.5, 0.5));
         Material middleMaterial = new Dielectric(color(1,1,1),1.5f);
-        Material rightMaterial = new Lambertian(color(0.4, 0.5, 0.8));
+        Material rightMaterial = new Phong(color(0.4, 0.5, 0.8));
         Material leftMaterial = new Metal(color(1, 0.6, 0.7),0.1f);
 
         world.add(new Sphere(point3(0,-1000,0), 1000, groundMaterial));

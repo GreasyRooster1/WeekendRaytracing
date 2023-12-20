@@ -9,6 +9,7 @@ import static processing.core.PApplet.append;
 public class HittableList extends Hittable{
     //is every object in the scene combined, so we only need to evaluate a single hit in the rayColor function
     public Hittable[] objects = {};
+    public PointLight[] lights = {};
 
     public void clear(){
         objects = new Hittable[0];

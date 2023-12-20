@@ -1,5 +1,6 @@
 package main;
 
+import main.Objects.HittableList;
 import main.Util.Point3;
 import main.Util.Ray;
 import main.Util.Vec3;
@@ -15,6 +16,8 @@ public class HitRecord {
     public Material mat;
     public double t;
     public boolean front_face;
+
+    public HittableList world;
     //public boolean hitAnything;
 
 

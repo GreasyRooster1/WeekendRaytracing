@@ -1,6 +1,7 @@
 package main;
 
 import main.Objects.Hittable;
+import main.Objects.HittableList;
 import main.ThreadedRendering.ThreadedRendering;
 import main.Util.*;
 
@@ -91,6 +92,7 @@ public class Camera {
             return new Color(0,0,0);
         }
         HitRecord rec = new HitRecord();
+        rec.world = (HittableList) world;
         if (world.hit(r, new Interval(0.01, infinity), rec)) {
             Ray scattered = new Ray();
             Color attenuation = new Color();
