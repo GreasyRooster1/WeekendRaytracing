@@ -54,8 +54,8 @@ public class Sphere extends Hittable{
 //            return false;
 //        }
 
-        rec.t = root;
-        rec.collisionPoint = ray.at(rec.t);
+        rec.distanceToObject = root;
+        rec.collisionPoint = ray.at(rec.distanceToObject);
         Vec3 outward_normal = div(sub(rec.collisionPoint,center),radius);
         rec.set_face_normal(ray, outward_normal);
         rec.normal = div(sub(rec.collisionPoint,center),radius);
