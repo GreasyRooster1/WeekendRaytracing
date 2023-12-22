@@ -20,7 +20,7 @@ public class Renderer {
         app = Main.app;
     }
     public static void render(){
-        threadedRenderingEnabled = false;
+        threadedRenderingEnabled = true;
         Worlds.topLight();
     }
 
