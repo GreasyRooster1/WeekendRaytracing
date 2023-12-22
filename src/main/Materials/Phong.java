@@ -9,6 +9,7 @@ import main.Util.Vec3;
 
 import static main.Util.Common.dist;
 import static main.Util.Vec3.*;
+import static processing.core.PApplet.println;
 
 public class Phong extends Material {
     private Vec3 albedo;
@@ -30,11 +31,13 @@ public class Phong extends Material {
         Vec3 specularTotal = new Vec3();
         for(PointLight light:rec.world.lights){
 
-            Vec3 directionToLight = sub(rec.collisionPoint,light.position).normalize();
+            Vec3 directionToLight = sub(rec.collisionPoint,light.position).normalized();
             double lightDistance = dist(rec.collisionPoint,light.position);
 
             if(!rec.world.hitSomething(new Ray(rec.collisionPoint,directionToLight), new Interval(0,lightDistance))){
-                double lightIntensity = dot( reflect(directionToLight, rec.normal).invert() ,rIn.direction());
+                Vec3 reflected = reflect(directionToLight, rec.normal.normalized());
+                double lightIntensity = dot( reflected ,rIn.directionNormalized());
+                println(lightIntensity);
                 specularTotal.add(mult(lightIntensity,light.color));
             }
         }

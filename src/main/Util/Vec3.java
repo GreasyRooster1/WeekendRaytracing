@@ -112,8 +112,8 @@ public class Vec3 {
     public static Vec3 normalize(Vec3 v) {
         return div(v,v.length());
     }
-    public Vec3 normalize() {
-        return div(length());
+    public Vec3 normalized() {
+        return normalize(this);
     }
 
     public int rgb() {

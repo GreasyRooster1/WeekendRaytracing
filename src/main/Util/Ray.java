@@ -22,6 +22,7 @@ public class Ray {
 
     public Vec3 origin() { return orig; }
     public Vec3 direction() { return dir; }
+    public Vec3 directionNormalized() { return dir.normalized(); }
 
     public Vec3 at(double t){
         return add(orig,(mult(t,dir)));
