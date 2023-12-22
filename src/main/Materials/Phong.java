@@ -10,7 +10,6 @@ import main.Util.Vec3;
 import static main.Util.Common.dist;
 import static main.Util.Vec3.*;
 import static processing.core.PApplet.println;
-
 public class Phong extends Material {
     private Vec3 albedo;
 
@@ -36,16 +35,15 @@ public class Phong extends Material {
 
             if(!rec.world.hitSomething(new Ray(rec.collisionPoint,directionToLight), new Interval(0,lightDistance))){
                 Vec3 reflected = reflect(directionToLight, rec.normal.normalized());
-                double lightIntensity = dot( reflected ,rIn.directionNormalized());
+                double lightIntensity = dot( reflected.invert() ,rIn.directionNormalized());
                 println(lightIntensity);
                 specularTotal.add(mult(lightIntensity,light.color));
             }
         }
-        Vec3 specular = specularTotal;
 
         //set() just acts as a pass-by-pointer equals operation
         scattered.set(new Ray(rec.collisionPoint,scatterDirection));
-        attenuation.set(add(albedo,specular));
+        attenuation.set(add(albedo,specularTotal));
 
         return true;
     }
