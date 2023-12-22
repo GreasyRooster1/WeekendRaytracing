@@ -25,4 +25,8 @@ public class Common {
     public static double dist(Vec3 u,Vec3 v){
         return PApplet.dist((float) u.x(),(float) u.y(),(float) u.z(),(float) v.x(),(float) v.y(),(float) v.z());
     }
+
+    public static float asNum(boolean b){
+        return b ? 1:0;
+    }
 }

@@ -9,6 +9,7 @@ this seems more intuitive now
 
 import main.Main;
 import main.Renderer;
+import processing.core.PApplet;
 
 import static java.lang.Math.*;
 import static main.Util.Common.vec3;
@@ -178,5 +179,9 @@ public class Vec3 {
             if (p.length_squared() < 1)
                 return p;
         }
+    }
+
+    public static Vec3 lerp(Vec3 a,Vec3 b,float t){
+        return new Vec3(PApplet.lerp((float) a.x(), (float) b.x(),t),PApplet.lerp((float) a.y(), (float) b.y(),t),PApplet.lerp((float) a.z(), (float) b.z(),t));
     }
 }

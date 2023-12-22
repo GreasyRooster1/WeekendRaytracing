@@ -79,7 +79,7 @@ public class Worlds {
 
         Material groundMaterial = new Lambertian(color(0.5, 0.5, 0.5));
         Material middleMaterial = new Dielectric(color(1,1,1),1.5f);
-        Material rightMaterial = new Phong(color(0.4, 0.5, 0.8));
+        Material rightMaterial = new Phong(color(0.4, 0.5, 0.8),1f,0.05f);
         Material leftMaterial = new Metal(color(1, 0.6, 0.7),0.1f);
 
         world.add(new Sphere(point3(0,-1000,0), 1000, groundMaterial));
@@ -115,31 +115,33 @@ public class Worlds {
 
         Material groundMaterial = new Lambertian(color(0.5, 0.5, 0.5));
         Material middleMaterial = new Dielectric(color(1,1,1),1.5f);
-        Material rightMaterial = new Lambertian(color(0.4, 0.5, 0.8));
+        Material rightMaterial = new Phong(color(0.4, 0.5, 0.8),1,0.02f);
         Material leftMaterial = new Metal(color(1, 0.6, 0.7),0.1f);
-        Material lightMaterial = new Emission(color(1, 1,4));
-        Material lightMaterial1 = new Emission(color(4, 1,1));
+        Material blueLight = new Emission(color(1, 1,4));
+        Material redLight = new Emission(color(4, 1,1));
+        Material whiteLight = new Emission(color(4, 4,4));
 
         world.add(new Sphere(point3(0,-1000,0), 1000, groundMaterial));
 
         world.add(new Sphere(point3(0,1,0), 1, middleMaterial));
         world.add(new Sphere(point3(0,1,2), 1, leftMaterial));
         world.add(new Sphere(point3(0,1,-2), 1, rightMaterial));
-        world.add(new Sphere(point3(0,8,8), 2f, lightMaterial));
-        world.add(new Sphere(point3(0,8,-8), 2f, lightMaterial1));
+        world.add(new Sphere(point3(0,8,8), 2f, blueLight));
+        world.add(new Sphere(point3(0,8,-8), 2f, redLight));
+        world.add(new Sphere(point3(0,16,0), 1f, whiteLight));
         Camera cam = new Camera();
 
         cam.aspectRatio = 16.0 / 9.0;
         cam.imageWidth = Main.app.width;
-        cam.samplesPerPixel = 500;
+        cam.samplesPerPixel = 3000;
         cam.maxDepth = 50;
 
-        cam.vfov = 40;
+        cam.vfov = 20;
         cam.lookfrom = point3(13,7,6);
         cam.lookat = point3(0,0,0);
         cam.vup = vec3(0,1,0);
 
-        cam.defocusAngle = 0.6;
+        cam.defocusAngle = 10;
         cam.setFocusObject(new Vec3(0,1,0));
 
         cam.skyIntensity = 0;
