@@ -117,14 +117,16 @@ public class Worlds {
         Material middleMaterial = new Dielectric(color(1,1,1),1.5f);
         Material rightMaterial = new Lambertian(color(0.4, 0.5, 0.8));
         Material leftMaterial = new Metal(color(1, 0.6, 0.7),0.1f);
-        Material lightMaterial = new Emission(color(4, 4,4));
+        Material lightMaterial = new Emission(color(1, 1,4));
+        Material lightMaterial1 = new Emission(color(4, 1,1));
 
         world.add(new Sphere(point3(0,-1000,0), 1000, groundMaterial));
 
         world.add(new Sphere(point3(0,1,0), 1, middleMaterial));
         world.add(new Sphere(point3(0,1,2), 1, leftMaterial));
         world.add(new Sphere(point3(0,1,-2), 1, rightMaterial));
-        world.add(new Sphere(point3(0,3,0), 0.5f, lightMaterial));
+        world.add(new Sphere(point3(0,8,8), 2f, lightMaterial));
+        world.add(new Sphere(point3(0,8,-8), 2f, lightMaterial1));
         Camera cam = new Camera();
 
         cam.aspectRatio = 16.0 / 9.0;
@@ -132,7 +134,7 @@ public class Worlds {
         cam.samplesPerPixel = 500;
         cam.maxDepth = 50;
 
-        cam.vfov = 20;
+        cam.vfov = 40;
         cam.lookfrom = point3(13,7,6);
         cam.lookat = point3(0,0,0);
         cam.vup = vec3(0,1,0);

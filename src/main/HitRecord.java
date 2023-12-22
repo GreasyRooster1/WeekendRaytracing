@@ -13,7 +13,7 @@ public class HitRecord {
     public Vec3 collisionPoint;
     public Vec3 normal;
     public Material material;
-    public double t;
+    public double distanceToObject;
     public boolean front_face;
 
     public HittableList world;
@@ -32,8 +32,7 @@ public class HitRecord {
         collisionPoint = t.collisionPoint;
         normal=t.normal;
         material = t.material;
-        this.t = t.t;
+        this.distanceToObject = t.distanceToObject;
         front_face = t.front_face;
-        //hitAnything = t.hitAnything;
     }
 }
