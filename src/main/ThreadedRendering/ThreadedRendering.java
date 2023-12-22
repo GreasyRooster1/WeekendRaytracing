@@ -11,7 +11,7 @@ import static processing.core.PApplet.println;
 
 public class ThreadedRendering {
     public static ChunkThread[] chunkThreads = {};
-    public static int chunkAmount = 10;
+    public static int chunkAmount = 50;
     private static int chunksFinished = 0;
     public static void start(Camera cam, Hittable world) {
         PixelCache.setup(cam.imageWidth,cam.imageHeight);
