@@ -16,9 +16,13 @@ public abstract class Material {
     }
     public boolean scatterWithModifiers(Ray rIn, HitRecord rec, Vec3 attenuation, Ray scattered){
         for(Modifier m:modifiers){
-            m.modify(rIn,rec,attenuation,scattered);
+            m.preModify(rIn,rec,attenuation,scattered);
         }
-        return scatter(rIn,rec,attenuation,scattered);
+        boolean out = scatter(rIn,rec,attenuation,scattered);
+        for(Modifier m:modifiers){
+            m.postModify(rIn,rec,attenuation,scattered);
+        }
+        return out;
     }
     public Vec3 emittedWithModifiers(double u, double v, Vec3 p){
         return emitted(u,v,p);

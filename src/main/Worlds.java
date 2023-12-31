@@ -134,7 +134,7 @@ public class Worlds {
 
         cam.aspectRatio = 16.0 / 9.0;
         cam.imageWidth = Main.app.width;
-        cam.samplesPerPixel = 10_000;
+        cam.samplesPerPixel = 50;
         cam.maxDepth = 50;
 
         cam.vfov = 20;

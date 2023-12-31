@@ -11,7 +11,7 @@ public class Main extends PApplet {
 
     public void settings() {
         randomSeed(4587634);
-        int imageWidth = 1000;
+        int imageWidth = 400;
         int imageHeight = (int) (imageWidth / aspectRatio);
         imageHeight = Math.max(imageHeight, 1);
         size(imageWidth, imageHeight);
