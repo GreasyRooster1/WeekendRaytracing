@@ -1,6 +1,7 @@
 package main;
 
 import main.Materials.*;
+import main.Materials.Modifiers.Tint;
 import main.Objects.HittableList;
 import main.Objects.PointLight;
 import main.Objects.Sphere;
@@ -115,7 +116,7 @@ public class Worlds {
 
         Material groundMaterial = new Lambertian(color(0.5, 0.5, 0.5));
         Material middleMaterial = new Dielectric(color(1,1,1),1.5f);
-        Material rightMaterial = new Phong(color(0.4, 0.5, 0.8),1,0.02f);
+        Material rightMaterial = new Phong(color(0.4, 0.5, 0.8),1,0.02f).addModifier(new Tint(1,0,0));
         Material leftMaterial = new Metal(color(1, 0.6, 0.7),0.1f);
         Material blueLight = new Emission(color(1, 1,4));
         Material redLight = new Emission(color(4, 1,1));

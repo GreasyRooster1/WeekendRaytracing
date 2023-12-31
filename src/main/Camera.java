@@ -96,8 +96,8 @@ public class Camera {
         if (world.hit(r, new Interval(0.01, infinity), rec)) {
             Ray scattered = new Ray();
             Color attenuation = new Color();
-            Vec3 colorFromEmission = rec.material.emitted(0,0, rec.collisionPoint);
-            if(!rec.material.scatter(r,rec,attenuation,scattered)){
+            Vec3 colorFromEmission = rec.material.emittedWithModifiers(0,0, rec.collisionPoint);
+            if(!rec.material.scatterWithModifiers(r,rec,attenuation,scattered)){
                 return colorFromEmission;
             }
             Vec3 colorFromScatter =  mult(attenuation,rayColor(scattered,depth-1,world));
