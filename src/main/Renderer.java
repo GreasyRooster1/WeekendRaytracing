@@ -21,7 +21,7 @@ public class Renderer {
     }
     public static void render(){
         threadedRenderingEnabled = false;
-        Worlds.topLight();
+        Worlds.modifiersWorld();
     }
 
 

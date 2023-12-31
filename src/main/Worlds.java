@@ -236,4 +236,43 @@ public class Worlds {
         TimeKeeper.startTimeKeep();
         cam.render(world);
     }
+    public static void modifiersWorld(){
+        HittableList world = new HittableList();
+
+        Material groundMaterial = new Lambertian(color(0.5, 0.5, 0.5));
+        Material rightMaterial = new Phong(color(1,1,1),1,0.02f).addModifier(new Tint(1,0,0));
+        Material middleMaterial = new Phong(color(1, 1, 1),1,0.02f);
+        Material leftMaterial = new Phong(color(1, 1, 1),1,0.02f).addModifier(new Mix(new Dielectric(1.5f),0.5f));
+        Material blueLight = new Emission(color(1, 1,4));
+        Material redLight = new Emission(color(4, 1,1));
+        Material whiteLight = new Emission(color(4, 4,4));
+
+        world.add(new Sphere(point3(0,-1000,0), 1000, groundMaterial));
+
+        world.add(new Sphere(point3(0,1,0), 1, middleMaterial));
+        world.add(new Sphere(point3(0,1,2), 1, leftMaterial));
+        world.add(new Sphere(point3(0,1,-2), 1, rightMaterial));
+        world.add(new Sphere(point3(0,8,8), 2f, blueLight));
+        world.add(new Sphere(point3(0,8,-8), 2f, redLight));
+        world.add(new Sphere(point3(0,16,0), 1f, whiteLight));
+        Camera cam = new Camera();
+
+        cam.aspectRatio = 16.0 / 9.0;
+        cam.imageWidth = Main.app.width;
+        cam.samplesPerPixel = 100;
+        cam.maxDepth = 50;
+
+        cam.vfov = 20;
+        cam.lookfrom = point3(13,7,6);
+        cam.lookat = point3(0,0,0);
+        cam.vup = vec3(0,1,0);
+
+        cam.defocusAngle = 10;
+        cam.setFocusObject(new Vec3(0,1,0));
+
+        cam.skyIntensity = 0;
+
+        TimeKeeper.startTimeKeep();
+        cam.render(world);
+    }
 }
