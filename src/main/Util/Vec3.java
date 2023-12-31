@@ -75,6 +75,9 @@ public class Vec3 {
     public static Vec3 sub(Vec3 u, Vec3 v) {
         return new Vec3(u.e[0] - v.e[0], u.e[1] - v.e[1], u.e[2] - v.e[2]);
     }
+    public static Vec3 sub(Vec3 u, double v) {
+        return new Vec3(u.e[0] - v, u.e[1] - v, u.e[2] - v);
+    }
 
     public static Vec3 mult(Vec3 u,Vec3 v) {
         return new Vec3(u.e[0] * v.e[0], u.e[1] * v.e[1], u.e[2] * v.e[2]);

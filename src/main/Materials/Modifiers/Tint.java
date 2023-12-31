@@ -1,7 +1,6 @@
 package main.Materials.Modifiers;
 
 import main.HitRecord;
-import main.Main;
 import main.Modifier;
 import main.Util.Ray;
 import main.Util.Vec3;
@@ -18,7 +17,8 @@ public class Tint extends Modifier {
         b=_b;
     }
     @Override
-    public void postModify(Ray rIn, HitRecord rec, Vec3 attenuation, Ray scattered) {
+    public boolean postModify(Ray rIn, HitRecord rec, Vec3 attenuation, Ray scattered) {
         attenuation.set(mult(attenuation,vec3(r,g,b)));
+        return false;
     }
 }

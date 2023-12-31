@@ -7,10 +7,11 @@ public abstract class Modifier {
     public void modify(Ray rIn, HitRecord rec, Vec3 attenuation, Ray scattered){
 
     }
-    public void preModify(Ray rIn, HitRecord rec, Vec3 attenuation, Ray scattered){
-
+    public boolean preModify(Ray rIn, HitRecord rec, Vec3 attenuation, Ray scattered){
+        return false;
     }
-    public void postModify(Ray rIn, HitRecord rec, Vec3 attenuation, Ray scattered){
+    public boolean postModify(Ray rIn, HitRecord rec, Vec3 attenuation, Ray scattered){
 
+        return false;
     }
 }

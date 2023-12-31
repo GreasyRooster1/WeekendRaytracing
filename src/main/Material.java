@@ -16,11 +16,15 @@ public abstract class Material {
     }
     public boolean scatterWithModifiers(Ray rIn, HitRecord rec, Vec3 attenuation, Ray scattered){
         for(Modifier m:modifiers){
-            m.preModify(rIn,rec,attenuation,scattered);
+            if(m.preModify(rIn,rec,attenuation,scattered)){
+                return true;
+            }
         }
         boolean out = scatter(rIn,rec,attenuation,scattered);
         for(Modifier m:modifiers){
-            m.postModify(rIn,rec,attenuation,scattered);
+            if(m.postModify(rIn,rec,attenuation,scattered)){
+                return true;
+            }
         }
         return out;
     }
