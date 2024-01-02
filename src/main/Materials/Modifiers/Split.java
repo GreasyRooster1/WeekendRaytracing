@@ -27,6 +27,7 @@ public class Split extends Modifier {
                 material.scatterWithModifiers(rIn, rec, attenuation, scattered);
                 return true;
             }
+            return false;
         }
         return false;
     }

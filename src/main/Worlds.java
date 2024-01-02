@@ -242,7 +242,7 @@ public class Worlds {
 
         Material groundMaterial = new Lambertian(color(0.5, 0.5, 0.5));
         Material rightMaterial = new Phong(color(1,1,1),1,0.02f).addModifier(new Tint(1,0,0));
-        Material middleMaterial = new Phong(color(1, 1, 1),1,0.02f).addModifier(new Split(new Dielectric(1.5)));
+        Material middleMaterial = new Phong(color(0.4, 0.4, 1),1,0.02f).addModifier(new Split(new Phong(vec3(0.4,1,0.4),1,0.02f)));
         Material leftMaterial = new Phong(color(1, 1, 1),1,0.02f).addModifier(new Mix(new Dielectric(1.5f),0.5f));
         Material blueLight = new Emission(color(1, 1,4));
         Material redLight = new Emission(color(4, 1,1));
@@ -260,7 +260,7 @@ public class Worlds {
 
         cam.aspectRatio = 16.0 / 9.0;
         cam.imageWidth = Main.app.width;
-        cam.samplesPerPixel = 100;
+        cam.samplesPerPixel = 500;
         cam.maxDepth = 50;
 
         cam.vfov = 20;
