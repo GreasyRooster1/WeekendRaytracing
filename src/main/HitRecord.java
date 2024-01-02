@@ -1,5 +1,6 @@
 package main;
 
+import main.Objects.Hittable;
 import main.Objects.HittableList;
 import main.Util.Ray;
 import main.Util.Vec3;
@@ -15,8 +16,8 @@ public class HitRecord {
     public Material material;
     public double distanceToObject;
     public boolean front_face;
-
     public HittableList world;
+    public Hittable obj;
     //public boolean hitAnything;
 
 
@@ -32,7 +33,9 @@ public class HitRecord {
         collisionPoint = t.collisionPoint;
         normal=t.normal;
         material = t.material;
-        this.distanceToObject = t.distanceToObject;
+        distanceToObject = t.distanceToObject;
         front_face = t.front_face;
+        world = t.world;
+        obj = t.obj;
     }
 }

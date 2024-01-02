@@ -32,6 +32,7 @@ public class HittableList extends Hittable{
             if (object.hit(ray, new Interval(interval.min, closest_so_far), tempRec)) {
                 hitAnything = true;
                 closest_so_far = tempRec.distanceToObject;
+                tempRec.obj = object;
                 rec.set(tempRec);
             }
         }

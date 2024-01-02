@@ -187,4 +187,8 @@ public class Vec3 {
     public static Vec3 lerp(Vec3 a,Vec3 b,float t){
         return new Vec3(PApplet.lerp((float) a.x(), (float) b.x(),t),PApplet.lerp((float) a.y(), (float) b.y(),t),PApplet.lerp((float) a.z(), (float) b.z(),t));
     }
+
+    public static Vec3 directionTo(Vec3 origin,Vec3 terminal){
+        return sub(origin,terminal);
+    }
 }

@@ -1,5 +1,6 @@
 package main;
 
+import main.Objects.Hittable;
 import main.Util.Ray;
 import main.Util.Vec3;
 

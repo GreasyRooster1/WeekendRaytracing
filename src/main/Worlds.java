@@ -3,6 +3,7 @@ package main;
 import main.Materials.*;
 import main.Materials.Modifiers.Mix;
 import main.Materials.Modifiers.RoughSurface;
+import main.Materials.Modifiers.Split;
 import main.Materials.Modifiers.Tint;
 import main.Objects.HittableList;
 import main.Objects.PointLight;
@@ -241,7 +242,7 @@ public class Worlds {
 
         Material groundMaterial = new Lambertian(color(0.5, 0.5, 0.5));
         Material rightMaterial = new Phong(color(1,1,1),1,0.02f).addModifier(new Tint(1,0,0));
-        Material middleMaterial = new Phong(color(1, 1, 1),1,0.02f);
+        Material middleMaterial = new Phong(color(1, 1, 1),1,0.02f).addModifier(new Split(new Dielectric(1.5)));
         Material leftMaterial = new Phong(color(1, 1, 1),1,0.02f).addModifier(new Mix(new Dielectric(1.5f),0.5f));
         Material blueLight = new Emission(color(1, 1,4));
         Material redLight = new Emission(color(4, 1,1));
