@@ -64,7 +64,7 @@ public class Worlds {
 
         cam.aspectRatio = 16.0 / 9.0;
         cam.imageWidth = Main.app.width;
-        cam.samplesPerPixel = 5;
+        cam.samplesPerPixel = 50;
         cam.maxDepth = 50;
 
         cam.vfov = 20;
@@ -250,9 +250,9 @@ public class Worlds {
 
         world.add(new Sphere(point3(0,-1000,0), 1000, groundMaterial));
 
-        world.add(new Sphere(point3(0,1,0), 1, middleMaterial));
-        world.add(new Sphere(point3(0,1,2), 1, leftMaterial));
-        world.add(new Sphere(point3(0,1,-2), 1, rightMaterial));
+        world.add(new Sphere(point3(0,1,0), 4, middleMaterial));
+        world.add(new Sphere(point3(0,1,2), 4, leftMaterial));
+        world.add(new Sphere(point3(0,1,-2), 4, rightMaterial));
         world.add(new Sphere(point3(0,8,8), 2f, blueLight));
         world.add(new Sphere(point3(0,8,-8), 2f, redLight));
         world.add(new Sphere(point3(0,16,0), 1f, whiteLight));
@@ -268,7 +268,7 @@ public class Worlds {
         cam.lookat = point3(0,0,0);
         cam.vup = vec3(0,1,0);
 
-        cam.defocusAngle = 10;
+        cam.defocusAngle = 0.1f;
         cam.setFocusObject(new Vec3(0,1,0));
 
         cam.skyIntensity = 0;
